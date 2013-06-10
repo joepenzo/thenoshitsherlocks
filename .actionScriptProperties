@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<actionScriptProperties analytics="false" mainApplicationPath="gamejam/gameJam.as" projectUUID="18a91189-26c1-40ef-a766-1ffab85572b0" version="10">
+<actionScriptProperties analytics="false" mainApplicationPath="gamejam/gameJamMain.as" projectUUID="18a91189-26c1-40ef-a766-1ffab85572b0" version="10">
   <compiler additionalCompilerArguments="-locale en_US" autoRSLOrdering="true" copyDependentFiles="true" fteInMXComponents="false" generateAccessible="true" htmlExpressInstall="true" htmlGenerate="true" htmlHistoryManagement="true" htmlPlayerVersionCheck="true" includeNetmonSwc="false" outputFolderPath="bin" removeUnusedRSL="true" sourceFolderPath="src" strict="true" targetPlayerVersion="0.0.0" useApolloConfig="false" useDebugRSLSwfs="true" verifyDigests="true" warn="true">
-    <compilerSourcePath/>
+    <compilerSourcePath>
+      <compilerSourcePathEntry kind="1" linkType="1" path="libs/Reusabilitee/source/com"/>
+    </compilerSourcePath>
     <libraryPath defaultLinkType="0">
       <libraryPathEntry kind="4" path="">
         <excludedEntries>
@@ -28,11 +30,16 @@
           <libraryPathEntry kind="3" linkType="1" path="${PROJECT_FRAMEWORKS}/libs/automation_agent.swc" useDefaultLinkType="false"/>
         </excludedEntries>
       </libraryPathEntry>
+      <libraryPathEntry kind="3" linkType="1" path="libs/CitrusEngine/CEV3-1-6-Starling-Feathers-Box2D.swc" useDefaultLinkType="false"/>
+      <libraryPathEntry kind="3" linkType="1" path="libs/Greensock/greensock.swc" useDefaultLinkType="false"/>
+      <libraryPathEntry kind="3" linkType="1" path="libs/LogMeister/bin/logmeister.swc" useDefaultLinkType="false"/>
+      <libraryPathEntry kind="3" linkType="1" path="libs/TrazzleLib/TrazzleCore.swc" useDefaultLinkType="false"/>
+      <libraryPathEntry kind="3" linkType="1" path="libs/TrazzleLib/TrazzleLib.swc" useDefaultLinkType="false"/>
     </libraryPath>
     <sourceAttachmentPath/>
   </compiler>
   <applications>
-    <application path="gamejam/gameJam.as"/>
+    <application path="gamejam/gameJamMain.as"/>
   </applications>
   <modules/>
   <buildCSSFiles/>
