@@ -25,13 +25,13 @@ package {
 
 			add(new Platform("bottom", {x:stage.stageWidth / 2, y:stage.stageHeight, width:stage.stageWidth}));
 
-			add(new Platform("cloud", {x:250, y:250, width:170, oneWay:true}));
+			add(new Platform("cloud", {x:250, y:450, width:170, oneWay:false}));
 
-			var coin:Coin = new Coin("coin", {x:360, y:200});
+			var coin:Coin = new Coin("coin", {x:360, y:400});
 			add(coin);
 			coin.onBeginContact.add(coinTouched);
 
-			var hero:Hero = new Hero("Hero", {x:stage.stageWidth - 50, y:350});
+			var hero:Hero = new Hero("Hero", {x:stage.stageWidth/2 + 50, y:350});
 			add(hero);
 		}
 		
