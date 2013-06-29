@@ -20,7 +20,7 @@ package components.hill {
 		}
  
 		public function init(sliceWidth:uint, sliceHeight:uint):void {
- 
+ 			
 			_sliceWidth = sliceWidth;
 			_sliceHeight = sliceHeight;
  
@@ -36,6 +36,8 @@ package components.hill {
 		}
  
 		public function update():void {
+			
+			
 			// we don't want to move the parent like StarlingArt does!
 			if (_flagAdded)
 				this.parent.x = this.parent.y = 0;
@@ -52,7 +54,6 @@ package components.hill {
 			graphic.graphics.clear();
 			graphic.graphics.beginFill(Colors.BLACK);
 			//graphic.graphics.drawRect( (rider.GetPosition().x * 30),currentYPoint ,_sliceWidth,_sliceHeight);
-			graphic.graphics.lineStyle(1,Colors.WHITE);
 			graphic.graphics.moveTo((rider.GetPosition().x * 30), currentYPoint); 
 			graphic.graphics.lineTo((rider.GetPosition().x * 30) + _sliceWidth, nextYPoint); 
 			graphic.graphics.lineTo((rider.GetPosition().x * 30) + _sliceWidth, nextYPoint+_sliceHeight); 
@@ -63,7 +64,6 @@ package components.hill {
 		}
  
 		public function deleteHill(index:uint):void {
- 
  			//@todo fix delete
 //			removeChild(_images[index], true);
 //			_images.slice(index, 1);

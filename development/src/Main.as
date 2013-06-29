@@ -1,16 +1,22 @@
 ﻿package 
 {
 	import citrus.core.CitrusEngine;
-
+	
+	import global.GlobalData;
+	
 	import logmeister.LogMeister;
 	import logmeister.connectors.TrazzleConnector;
 
+	[SWF(width="960", height="500", frameRate="60")]
+		
 	public class Main extends CitrusEngine
 	{
 		public function Main() {
 			//TrazzleLogger.instance();			
 			//zz_init(stage, 'Game Jam');
 			LogMeister.addLogger(new TrazzleConnector(stage, "GAME JAM"));
+			this.gameData = new GlobalData();
+			
 			state = new GameJamGameState();
 			
 		}

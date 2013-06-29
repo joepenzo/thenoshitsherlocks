@@ -8,18 +8,22 @@ package components {
 	import citrus.physics.box2d.IBox2DPhysicsObject;
 	import flash.geom.Point;
 	import global.Constants;
+	import citrus.utils.AGameData;
+	import global.GlobalData;
+	import citrus.objects.platformer.box2d.Sensor;
+	import Box2D.Common.Math.b2Vec2;
 
 	/**
 	 * @author ezrabotter
 	 */
-	public class Obstacle extends Enemy {
+	public class Obstacle extends Sensor {
 		
-		private var _size:String;
 //		private static var _slowDownTime:int = 1800; //miliseconds
 //		private static var _slowDownSpeed:int = 2;
+		private var _size : String;
 		
 		public function Obstacle(name:String,size:String,params:Object) {
-			_size= size;
+			_size = size;
 			super(name, params);
 		}
 		
@@ -27,23 +31,11 @@ package components {
 
 			var collider:IBox2DPhysicsObject = Box2DUtils.CollisionGetOther(this, contact);
 
-			if (collider is _enemyClass && collider.body.GetLinearVelocity().y > enemyKillVelocity)
-				hurt();
-
-			if (_body.GetLinearVelocity().x < 0 && (contact.GetFixtureA() == _rightSensorFixture || contact.GetFixtureB() == _rightSensorFixture))
-				return;
-
-			if (_body.GetLinearVelocity().x > 0 && (contact.GetFixtureA() == _leftSensorFixture || contact.GetFixtureB() == _leftSensorFixture))
-				return;
-
-			if (contact.GetManifold().m_localPoint) {
-
-				var normalPoint:Point = new Point(contact.GetManifold().m_localPoint.x, contact.GetManifold().m_localPoint.y);
-				var collisionAngle:Number = new MathVector(normalPoint.x, normalPoint.y).angle * 180 / Math.PI;
-
-				if ((collider is Platform && collisionAngle != 90) || collider is Enemy)
-					turnAround();
+			if (collider is RunnerHero) {
+				var hero : RunnerHero = collider as RunnerHero;
+				hero.body.SetLinearVelocity( new b2Vec2(hero.body.GetLinearVelocity().x/2, hero.body.GetLinearVelocity().y) );
 			}
+		
 			
 			switch(_size) {
 				case Constants.obstacleSmall:
