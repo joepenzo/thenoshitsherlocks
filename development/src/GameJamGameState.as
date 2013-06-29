@@ -1,12 +1,15 @@
 package {
 	import citrus.core.State;
 	import citrus.physics.box2d.Box2D;
+
+	import components.BackgroundArt;
 	import components.RunnerHero;
-	import global.GlobalData;
-	import flash.geom.Point;
 	import components.hill.HillManager;
 	import components.hill.HillsView;
-	import components.ObstacleManager;
+
+	import global.GlobalData;
+
+	import flash.geom.Point;
 
 	/**
 	 * @author joepsuijkerbuijk
@@ -26,6 +29,8 @@ package {
 		override public function initialize():void {
 			super.initialize();
 			_gameData = _ce.gameData as GlobalData;
+
+			_ce.stage.addChildAt(new BackgroundArt, 0);
 
 			var box2D:Box2D = new Box2D("box2D");
 			box2D.visible = true;

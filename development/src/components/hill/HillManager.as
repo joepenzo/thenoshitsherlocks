@@ -7,6 +7,8 @@ package components.hill{
 	
 	import citrus.objects.platformer.box2d.Hero;
 	import citrus.objects.platformer.box2d.Hills;
+	import components.hill.HillsView;
+	import global.Utils;
 	import citrus.utils.AGameData;
 	
 	import components.hill.HillsView;
@@ -49,6 +51,7 @@ package components.hill{
 			}
 			
 		}
+
 		
 		
 		override protected function _createSlice():void {
