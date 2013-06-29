@@ -1,5 +1,6 @@
-package {
+package components.hill{
 	import citrus.objects.platformer.box2d.Hills;
+	import components.hill.HillsView;
 
 	/**
 	 * @author ezrabotter

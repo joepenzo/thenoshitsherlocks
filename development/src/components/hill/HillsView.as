@@ -1,20 +1,16 @@
-package {
+package components.hill {
 	import global.Colors;
-	import away3d.events.ParserEvent;
-	import components.RunnerHero;
-	import Box2D.Dynamics.b2Body;
-	import flash.events.Event;
+
 	import flash.display.Sprite;
+	import flash.events.Event;
 
 	/**
 	 * @author ezrabotter
 	 */
 	public class HillsView extends Sprite {
-//		private var _groundTexture:Texture;
 		private var _sliceWidth:uint;
 		private var _sliceHeight:uint;
  
-//		private var _images:Vector.<Image>;
  		private var _graphics:Array;
 		
 		private var _flagAdded:Boolean = false;
@@ -54,10 +50,10 @@ package {
  
 			graphic.graphics.clear();
 			graphic.graphics.beginFill(Colors.BLACK);
-			graphic.graphics.drawRect( (rider.GetPosition().x * 30),currentYPoint ,_sliceWidth,_sliceHeight);
+			//graphic.graphics.drawRect( (rider.GetPosition().x * 30),currentYPoint ,_sliceWidth,_sliceHeight);
 			
-			//graphic.graphics.moveTo((rider.GetPosition().x * 30), currentYPoint); 
-			//graphic.graphics.lineTo((rider.GetPosition().x * 30) + _sliceWidth, currentYPoint); 
+			graphic.graphics.moveTo((rider.GetPosition().x * 30), currentYPoint); 
+			graphic.graphics.lineTo((rider.GetPosition().x * 30) + _sliceWidth, currentYPoint); 
 			
 			graphic.graphics.endFill();
 			

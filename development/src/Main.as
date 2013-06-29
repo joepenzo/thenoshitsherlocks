@@ -1,8 +1,7 @@
 ﻿package 
 {
-
-	import citrus.core.starling.StarlingCitrusEngine;
 	import citrus.core.CitrusEngine;
+
 	import logmeister.LogMeister;
 	import logmeister.connectors.TrazzleConnector;
 

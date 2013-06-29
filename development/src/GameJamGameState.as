@@ -1,13 +1,14 @@
 package {
-	import flash.geom.Point;
-	import citrus.core.starling.StarlingState;
-	import global.Constants;
-	import components.Collectable;
 	import components.RunnerHero;
-	import citrus.core.State;
-	import citrus.objects.platformer.box2d.Platform;
-	import citrus.physics.box2d.Box2D;
+	import components.hill.HillManager;
+	import components.hill.HillsView;
+	import flash.geom.Point;
 	import global.GlobalData;
+
+
+
+
+
 
 	/**
 	 * @author joepsuijkerbuijk
@@ -43,7 +44,7 @@ package {
 //			add(powerUp);
 			
 			notice("State initialized");
-			view.camera.setUp(_hero, new Point(stage.stageWidth/4 , stage.stageHeight/2));
+			view.camera.setUp(_hero, new Point(stage.stageWidth / 4, stage.stageHeight / 2));
 		}
 		
 		override public function update(timeDelta:Number):void {
