@@ -2,3 +2,11 @@
 *.swf
 
 *.swf
+
+*.swf
+
+development/assets/.DS_Store
+
+*.swf
+
+development/libs/.DS_Store
