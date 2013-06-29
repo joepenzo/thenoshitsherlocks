@@ -1,10 +1,10 @@
 package {
-	import global.Colors;
-	import away3d.events.ParserEvent;
-	import components.RunnerHero;
 	import Box2D.Dynamics.b2Body;
-	import flash.events.Event;
+
+	import global.Colors;
+
 	import flash.display.Sprite;
+	import flash.events.Event;
 
 	/**
 	 * @author ezrabotter
@@ -46,7 +46,7 @@ package {
 
 		public function createSlice(rider : b2Body, nextYPoint : uint, currentYPoint : uint) : void {
  			
-			notice('currentYPoint: ' + (currentYPoint) + "   " + 'nextYPoint: ' + (nextYPoint));
+			//notice('currentYPoint: ' + (currentYPoint) + "   " + 'nextYPoint: ' + (nextYPoint));
 			var graphic : Sprite = new Sprite();
  			addChild(graphic);
 			
@@ -54,13 +54,14 @@ package {
  
 			graphic.graphics.clear();
 			graphic.graphics.beginFill(Colors.BLACK);
-			graphic.graphics.drawRect( (rider.GetPosition().x * 30),currentYPoint ,_sliceWidth,_sliceHeight);
-			
-			//graphic.graphics.moveTo((rider.GetPosition().x * 30), currentYPoint); 
-			//graphic.graphics.lineTo((rider.GetPosition().x * 30) + _sliceWidth, currentYPoint); 
-			
+			//graphic.graphics.drawRect( (rider.GetPosition().x * 30),currentYPoint ,_sliceWidth,_sliceHeight);
+			graphic.graphics.lineStyle(1);
+			graphic.graphics.moveTo((rider.GetPosition().x * 30), currentYPoint); 
+			graphic.graphics.lineTo((rider.GetPosition().x * 30) + _sliceWidth, nextYPoint); 
+			graphic.graphics.lineTo((rider.GetPosition().x * 30) + _sliceWidth, nextYPoint+_sliceHeight); 
+			graphic.graphics.lineTo((rider.GetPosition().x * 30), currentYPoint+_sliceHeight); 
+			graphic.graphics.lineTo((rider.GetPosition().x * 30), currentYPoint); 
 			graphic.graphics.endFill();
-			
 			
 			/*my_shape.graphics.moveTo(50, 50); 
 			my_shape.graphics.lineTo(100, 50);

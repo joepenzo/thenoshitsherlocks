@@ -14,11 +14,13 @@ package components {
 		private var _gameData : GlobalData;
 		
 		public function RunnerHero(name : String, params : Object = null) {
+					
 			super(name, params);
 			_gameData = _ce.gameData as GlobalData;
 			
 			_friction = 40;
 			maxVelocity = 10;
+					
 		}
 		
 		override public function addPhysics():void {
@@ -35,7 +37,6 @@ package components {
 		override protected function createShape():void
 		{
 			_shape = Box2DShapeMaker.Circle(radius*2, radius*2);
-
 		}
 
 		override protected function defineFixture():void
@@ -52,6 +53,7 @@ package components {
 			super.update(timeDelta);
 
 			var velocity:b2Vec2 = _body.GetLinearVelocity();
+
 
 			if (controlsEnabled)
 			{
@@ -79,7 +81,8 @@ package components {
 					_playerMovingHero = true;
 
 				}
-					//Player just stopped moving the hero this tick.
+				
+				//Player just stopped moving the hero this tick.
 				else if (!moveKeyPressed && _playerMovingHero)
 				{
 					_playerMovingHero = false;
