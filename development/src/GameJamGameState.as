@@ -1,12 +1,11 @@
 package {
 	import citrus.core.State;
 	import citrus.physics.box2d.Box2D;
-
 	import components.RunnerHero;
-
 	import global.GlobalData;
-
 	import flash.geom.Point;
+	import components.hill.HillManager;
+	import components.hill.HillsView;
 
 	/**
 	 * @author joepsuijkerbuijk
@@ -42,7 +41,7 @@ package {
 //			add(powerUp);
 			
 			notice("State initialized");
-			view.camera.setUp(_hero, new Point(stage.stageWidth/4 , stage.stageHeight/2));
+			view.camera.setUp(_hero, new Point(stage.stageWidth / 4, stage.stageHeight / 2));
 		}
 		
 		override public function update(timeDelta:Number):void {

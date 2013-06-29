@@ -1,9 +1,9 @@
 package components {
-	import citrus.physics.box2d.Box2DShapeMaker;
-	import citrus.physics.PhysicsCollisionCategories;
 	import Box2D.Common.Math.b2Vec2;
 
 	import citrus.objects.platformer.box2d.Hero;
+	import citrus.physics.PhysicsCollisionCategories;
+	import citrus.physics.box2d.Box2DShapeMaker;
 
 	import global.GlobalData;
 

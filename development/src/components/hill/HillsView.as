@@ -1,7 +1,6 @@
-package {
-	import Box2D.Dynamics.b2Body;
-
+package components.hill {
 	import global.Colors;
+	import Box2D.Dynamics.b2Body;
 
 	import flash.display.Sprite;
 	import flash.events.Event;
@@ -10,11 +9,9 @@ package {
 	 * @author ezrabotter
 	 */
 	public class HillsView extends Sprite {
-//		private var _groundTexture:Texture;
 		private var _sliceWidth:uint;
 		private var _sliceHeight:uint;
  
-//		private var _images:Vector.<Image>;
  		private var _graphics:Array;
 		
 		private var _flagAdded:Boolean = false;
@@ -55,23 +52,19 @@ package {
 			graphic.graphics.clear();
 			graphic.graphics.beginFill(Colors.BLACK);
 			//graphic.graphics.drawRect( (rider.GetPosition().x * 30),currentYPoint ,_sliceWidth,_sliceHeight);
-			graphic.graphics.lineStyle(1);
+			//graphic.graphics.lineStyle(1);
 			graphic.graphics.moveTo((rider.GetPosition().x * 30), currentYPoint); 
 			graphic.graphics.lineTo((rider.GetPosition().x * 30) + _sliceWidth, nextYPoint); 
 			graphic.graphics.lineTo((rider.GetPosition().x * 30) + _sliceWidth, nextYPoint+_sliceHeight); 
 			graphic.graphics.lineTo((rider.GetPosition().x * 30), currentYPoint+_sliceHeight); 
 			graphic.graphics.lineTo((rider.GetPosition().x * 30), currentYPoint); 
 			graphic.graphics.endFill();
-			
-			/*my_shape.graphics.moveTo(50, 50); 
-			my_shape.graphics.lineTo(100, 50);
-			my_shape.graphics.lineTo(100, 100);
-			my_shape.graphics.lineTo(50, 100);
-			my_shape.graphics.lineTo(50, 50);*/
+
 		}
  
 		public function deleteHill(index:uint):void {
  
+ 			//@todo fix delete
 //			removeChild(_images[index], true);
 //			_images.slice(index, 1);
 		}
