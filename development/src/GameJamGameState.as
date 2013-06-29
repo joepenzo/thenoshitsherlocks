@@ -6,6 +6,7 @@ package {
 	import flash.geom.Point;
 	import components.hill.HillManager;
 	import components.hill.HillsView;
+	import components.ObstacleManager;
 
 	/**
 	 * @author joepsuijkerbuijk
@@ -15,6 +16,8 @@ package {
 		private var _gameData : GlobalData;
 		private var _hero : RunnerHero;
 		private var _hillsView : HillsView;
+		private var _hills:HillManager;
+		private var _obstaclesManager:ObstacleManager;
 		
 		public function GameJamGameState() {
 			super();
@@ -34,19 +37,17 @@ package {
 			//add(new Platform("bottom", {x:100 / 2, y:0, width:300}));			
 			
 			_hillsView = new HillsView();
-			var hills:HillManager = new HillManager("hills",{hillStartY : 1000, rider:_hero, sliceWidth:50, range:40, roundFactor:8, sliceHeight:600, widthHills:stage.stageWidth, registration:"topLeft", view:_hillsView});
-			add(hills);
+			_hills = new HillManager("hills",{hillStartY : 1000, rider:_hero, sliceWidth:50, range:40, roundFactor:8, sliceHeight:stage.stageHeight, widthHills:stage.stageWidth, registration:"topLeft", view:_hillsView});
+			add(_hills);
 			
-			
-//			var powerUp:Collectable = new Collectable("powerUp", 1, Constants.Power, {x: 400, y: 500});
-//			add(powerUp);
+			_obstaclesManager = new ObstacleManager("obstacleManager", {});
+			add(_obstaclesManager);
 			
 			notice("State initialized");
 			view.camera.setUp(_hero, new Point(stage.stageWidth / 4, stage.stageHeight / 2));
 		}
 		
 		override public function update(timeDelta:Number):void {
-
 			super.update(timeDelta);
 			_hillsView.update();
 		}
