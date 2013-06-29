@@ -12,12 +12,12 @@ package components {
 	public class Collectable extends Coin {
 		private var _gameData : GlobalData;
 		private var _type : String;
-		private var _value : Number;
+		//private var _value : Number;
 		
-		public function Collectable(name : String, type : String, value : Number, params : Object = null) {
+		public function Collectable(name : String, type : String, params : Object = null) {
 			_gameData = _ce.gameData as GlobalData;
-			_value = value;
 			_type = type;
+			//_value = value;
 			super(name, params);
 		}
 		
@@ -27,33 +27,33 @@ package components {
 
 			var collider:IBox2DPhysicsObject = Box2DUtils.CollisionGetOther(this, contact);
 
-			if (_collectorClass && collider is _collectorClass) {
+			if (_collectorClass && collider is _collectorClass)
 				kill = true;
-			}
 				
-			switch(_type) {
-				case(Constants.Power):
-					notice("Power");
-					addPower();
-					break;
-				case(Constants.Coin):	
-					notice("Coin");
-					addCoin();
-					break;
-			}
+			notice("Obtained power");
 			
+//			switch(_type) {
+//				case(Constants.Power):
+//					notice("Power");
+////					addPower();
+//					break;
+////				case(Constants.Coin):	
+////					notice("Coin");
+//////					addCoin();
+////					break;
+//			}
 		}
 		
-		private function addPower() : void {			
-			notice(_gameData.currentPowerValue);
-			_gameData.currentPowerValue += _value;
-			notice(_gameData.currentPowerValue);
-		}
-		
-		private function addCoin() : void {
-			notice(_gameData.currentCoinValue);
-			_gameData.currentCoinValue += _value;
-			notice(_gameData.currentCoinValue);
-		}
+//		private function addPower() : void {			
+//			notice(_gameData.currentPowerValue);
+//			_gameData.currentPowerValue += _value;
+//			notice(_gameData.currentPowerValue);
+//		}
+//		
+//		private function addCoin() : void {
+//			notice(_gameData.currentCoinValue);
+//			_gameData.currentCoinValue += _value;
+//			notice(_gameData.currentCoinValue);
+//		}
 	}
 }

@@ -11,5 +11,5 @@
     <AS3Classpath generateProblems="false" sdkBased="false" type="lib" useAsSharedCode="false">libs/TrazzleCore.swc</AS3Classpath>
     <AS3Classpath generateProblems="false" sdkBased="false" type="lib" useAsSharedCode="false">libs/TrazzleLib.swc</AS3Classpath>
     <AS3Classpath generateProblems="false" sdkBased="false" type="lib" useAsSharedCode="false">libs/logmeister.swc</AS3Classpath>
-    <AS3Classpath generateProblems="false" sdkBased="false" type="lib" useAsSharedCode="false">libs/CEV3-1-7-Box2D.swc</AS3Classpath>
+    <AS3Classpath generateProblems="false" sdkBased="false" type="lib" useAsSharedCode="false">libs/CEV3-1-7-ALL.swc</AS3Classpath>
 </AS3Classpath>
