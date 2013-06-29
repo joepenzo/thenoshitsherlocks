@@ -10,6 +10,7 @@ package components
 	
 	public class ObstacleManager extends CitrusObject
 	{
+		private const OBSTAClE_HEIGHT: int = 150;
 
 		private var _gameData:GlobalData;
 		
@@ -24,10 +25,10 @@ package components
 		
 		override public function update(timeDelta:Number):void {
 			super.update(timeDelta);
-			//if (_gameData.currentHillY) notice(_gameData.currentHillY);
-			
 
-			if (_gameData.heroPos.x % 700 <= 5) _ce.state.add( new Obstacle("tree",  Constants.obstacleLarge, {x:_gameData.currentHillX, y:_gameData.currentHillY - 100}) );
+			if (_gameData.heroPos.x % 700 <= 5) {
+				_ce.state.add( new Obstacle("tree",  Constants.obstacleLarge, {height: OBSTAClE_HEIGHT, x:_gameData.currentHillX, y:_gameData.currentHillY - OBSTAClE_HEIGHT/2 + 10}) );
+			}
 			
 		}
 		

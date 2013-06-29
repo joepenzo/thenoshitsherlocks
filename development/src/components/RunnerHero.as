@@ -13,7 +13,8 @@ package components {
 	 * @author joepsuijkerbuijk
 	 */
 	public class RunnerHero extends Hero {
-		private const MIN_VELOCITY:Number = 2;
+		private const MIN_VELOCITY:Number = 3.5;
+		private const MAX_VELOCITY:Number = 8;
 
 		private var _gameData : GlobalData;
 		
@@ -23,7 +24,7 @@ package components {
 			_gameData = _ce.gameData as GlobalData;
 			
 			_friction = 40;
-			maxVelocity = 10;
+			maxVelocity = MAX_VELOCITY;
 					
 		}
 		
@@ -59,7 +60,7 @@ package components {
 			
 			friction = _friction;
 			//velocity.Add(getSlopeBasedMoveAngle());
-			velocity.Add(new b2Vec2(getSlopeBasedMoveAngle().x/8, getSlopeBasedMoveAngle().y/3));
+			velocity.Add(new b2Vec2(getSlopeBasedMoveAngle().x/15, getSlopeBasedMoveAngle().y/10));
 					
 			if (controlsEnabled)
 			{

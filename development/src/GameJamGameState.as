@@ -37,14 +37,14 @@ package {
 			//add(new Platform("bottom", {x:100 / 2, y:0, width:300}));			
 			
 			_hillsView = new HillsView();
-			_hills = new HillManager("hills",{hillStartY : 1000, rider:_hero, sliceWidth:50, range:40, roundFactor:8, sliceHeight:stage.stageHeight, widthHills:stage.stageWidth, registration:"topLeft", view:_hillsView});
+			_hills = new HillManager("hills",{hillStartY : 1000, rider:_hero, sliceWidth:100, roundFactor:5, sliceHeight:stage.stageHeight, widthHills:stage.stageWidth, registration:"topLeft", view:_hillsView});
 			add(_hills);
 			
 			_obstaclesManager = new ObstacleManager("obstacleManager", {});
 			add(_obstaclesManager);
 			
 			notice("State initialized");
-			view.camera.setUp(_hero, new Point(stage.stageWidth / 4, stage.stageHeight / 2));
+			view.camera.setUp(_hero, new Point(stage.stageWidth / 2, stage.stageHeight / 2));
 		}
 		
 		override public function update(timeDelta:Number):void {

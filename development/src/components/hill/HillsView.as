@@ -53,7 +53,7 @@ package components.hill {
  
 			graphic.graphics.clear();
 			graphic.graphics.beginFill(Colors.BLACK);
-			graphic.graphics.lineStyle(1, Colors.WHITE);
+//			graphic.graphics.lineStyle(1, Colors.WHITE);
 			graphic.graphics.moveTo((rider.GetPosition().x * 30), currentYPoint); 
 			graphic.graphics.lineTo((rider.GetPosition().x * 30) + _sliceWidth, nextYPoint); 
 			graphic.graphics.lineTo((rider.GetPosition().x * 30) + _sliceWidth, nextYPoint+_sliceHeight); 
