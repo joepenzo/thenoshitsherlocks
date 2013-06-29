@@ -1,6 +1,7 @@
 package components.hill{
 	import citrus.objects.platformer.box2d.Hills;
 	import components.hill.HillsView;
+	import global.Utils;
 
 	/**
 	 * @author ezrabotter
@@ -26,10 +27,12 @@ package components.hill{
 		}
 
 		override protected function _pushHill():void {
-			
-			if (view)
-				(view as HillsView).createSlice(body, _nextYPoint * _box2D.scale, _currentYPoint * _box2D.scale);
-
+						
+			if (view) {
+				var nextY:Number = _nextYPoint * _box2D.scale;
+				var currentY:Number = _currentYPoint * _box2D.scale;
+				(view as HillsView).createSlice(body, nextY, currentY);					
+			}
 			super._pushHill();
 		}
 
