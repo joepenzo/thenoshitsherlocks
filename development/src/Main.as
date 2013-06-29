@@ -1,6 +1,7 @@
 ﻿package 
 {
 
+	import citrus.core.starling.StarlingCitrusEngine;
 	import citrus.core.CitrusEngine;
 	import logmeister.LogMeister;
 	import logmeister.connectors.TrazzleConnector;
@@ -10,19 +11,9 @@
 		public function Main() {
 			//TrazzleLogger.instance();			
 			//zz_init(stage, 'Game Jam');
-		
 			LogMeister.addLogger(new TrazzleConnector(stage, "GAME JAM"));
-			
-			//setUpStarling(true);
 			state = new GameJamGameState();
 			
-//			log('d debug');
-//			log('i info');
-//			log('n notice');
-//			log('w warning');
-//			log('e error');
-//			log('c critical');
-//			log('f fatal');
 		}
 		
 	}

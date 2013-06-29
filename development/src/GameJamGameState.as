@@ -1,4 +1,5 @@
 package {
+	import citrus.core.starling.StarlingState;
 	import global.Constants;
 	import components.Collectable;
 	import components.RunnerHero;
@@ -21,7 +22,7 @@ package {
 		
 		override public function initialize():void {
 			super.initialize();
-				
+				log("sfasdasddas");
 			_gameData = _ce.gameData as GlobalData;
 
 			var box2D:Box2D = new Box2D("box2D");
@@ -37,13 +38,10 @@ package {
 			//var hills:HillsManagingGraphics = new HillsManagingGraphics("hills",{rider:_ball, sliceWidth:30, roundFactor:20, sliceHeight:800, widthHills:stage.stageWidth, registration:"topLeft", view:_hillsTexture});
 			//add(hills);
 						
-			var powerUp:Collectable = new Collectable("powerUp", Constants.Power, {x: 400, y: 500});
-			add(powerUp);
+//			var powerUp:Collectable = new Collectable("powerUp", 1, Constants.Power, {x: 400, y: 500});
+//			add(powerUp);
 			
 			notice("State initialized");
-			debug(_hero.x);
-			error(_gameData.currentPowerValue);
-			
 			//view.camera.setUp(_hero, new Point(stage.stageWidth/4 , stage.stageHeight/2));
 		}
 		
