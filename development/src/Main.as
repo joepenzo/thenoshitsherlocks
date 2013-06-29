@@ -1,7 +1,7 @@
 ﻿package 
 {
-	import citrus.core.CitrusEngine;
 
+	import citrus.core.CitrusEngine;
 	import logmeister.LogMeister;
 	import logmeister.connectors.TrazzleConnector;
 
@@ -13,6 +13,7 @@
 		
 			LogMeister.addLogger(new TrazzleConnector(stage, "GAME JAM"));
 			
+			//setUpStarling(true);
 			state = new GameJamGameState();
 			
 //			log('d debug');
