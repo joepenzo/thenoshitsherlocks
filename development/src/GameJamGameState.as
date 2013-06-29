@@ -34,8 +34,9 @@ package {
 			//add(new Platform("bottom", {x:100 / 2, y:0, width:300}));			
 			
 			_hillsView = new HillsView();
-			var hills:HillManager = new HillManager("hills",{hillStartY : 1000, rider:_hero, sliceWidth:50, range:40, roundFactor:8, sliceHeight:300, widthHills:stage.stageWidth, registration:"topLeft", view:_hillsView});
+			var hills:HillManager = new HillManager("hills",{hillStartY : 1000, rider:_hero, sliceWidth:50, range:40, roundFactor:8, sliceHeight:600, widthHills:stage.stageWidth, registration:"topLeft", view:_hillsView});
 			add(hills);
+			
 			
 //			var powerUp:Collectable = new Collectable("powerUp", 1, Constants.Power, {x: 400, y: 500});
 //			add(powerUp);
