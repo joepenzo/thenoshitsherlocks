@@ -6,8 +6,13 @@ package components {
 	import citrus.physics.box2d.Box2DShapeMaker;
 	
 	import flash.geom.Point;
-	
+	import citrus.physics.box2d.Box2DUtils;
+
 	import global.GlobalData;
+	import citrus.math.MathVector;
+	import citrus.physics.box2d.IBox2DPhysicsObject;
+	import Box2D.Dynamics.Contacts.b2Contact;
+	import citrus.objects.platformer.box2d.Sensor;
 
 	/**
 	 * @author joepsuijkerbuijk
@@ -76,28 +81,17 @@ package components {
 					_fixture.SetFriction(_friction);
 				}
 
-//				if (_onGround && _ce.input.justDid("jump", inputChannel) && !_ducking)
-//				{
-//					velocity.y = -jumpHeight;
-//					onJump.dispatch();
-//				}
-//
-//				if (_ce.input.isDoing("jump", inputChannel) && !_onGround && velocity.y < 0)
-//				{
-//					velocity.y -= jumpAcceleration;
-//				}
+				if (_onGround && _ce.input.justDid("jump", inputChannel)) {
+					drawSlope();
+					velocity.x = + jumpHeight/3;
+					velocity.y = -jumpHeight;
+					onJump.dispatch();
+				} else if (_ce.input.isDoing("jump", inputChannel) && !_onGround && velocity.y < 0) {
+					velocity.y -= jumpAcceleration;
+				}
 
-//				if (_springOffEnemy != -1)
-//				{
-//					if (_ce.input.isDoing("jump", inputChannel))
-//						velocity.y = -enemySpringJumpHeight;
-//					else
-//						velocity.y = -enemySpringHeight;
-//					_springOffEnemy = -1;
-//				}
-
-			
 			}
+			
 			
 			//Cap velocities
 			if (velocity.x > (maxVelocity))
@@ -118,6 +112,48 @@ package components {
 			
 			
 		}
+		
+		private function drawSlope():void {
+			
+		}		
+		
+		override public function handleBeginContact(contact:b2Contact):void {
+			
+			var collider:IBox2DPhysicsObject = Box2DUtils.CollisionGetOther(this, contact);
+			
+			/*if (_enemyClass && collider is _enemyClass)
+			{
+				if (_body.GetLinearVelocity().y < killVelocity && !_hurt)
+				{
+					hurt();
+					
+					//fling the hero
+					var hurtVelocity:b2Vec2 = _body.GetLinearVelocity();
+					hurtVelocity.y = -hurtVelocityY;
+					hurtVelocity.x = hurtVelocityX;
+					if (collider.x > x)
+						hurtVelocity.x = -hurtVelocityX;
+					_body.SetLinearVelocity(hurtVelocity);
+				}
+				else
+				{
+					_springOffEnemy = collider.y - height;
+					onGiveDamage.dispatch();
+				}
+			}*/
+			
+			//Collision angle if we don't touch a Sensor.
+			if (contact.GetManifold().m_localPoint && !(collider is Sensor)) //The normal property doesn't come through all the time. I think doesn't come through against sensors.
+			{			
+				var collisionAngle:Number = (((new MathVector(contact.normal.x, contact.normal.y).angle) * 180 / Math.PI) + 360) % 360;// 0º <-> 360º
+				//if ((collisionAngle > 45 && collisionAngle < 135)){
+					_groundContacts.push(collider.body.GetFixtureList());
+					_onGround = true;
+					updateCombinedGroundAngle();
+				//}
+			}
+		}
+		
 		
 		
 		

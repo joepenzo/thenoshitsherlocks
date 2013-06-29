@@ -31,13 +31,13 @@ package {
 			box2D.visible = true;
 			add(box2D);
 
-			_hero = new RunnerHero("Hero", {x:100, y:-100, radius:.5});
+			_hero = new RunnerHero("Hero", {x:100, y:-100, radius:.5, jumpHeight:15});
 			add(_hero);
 				
 			//add(new Platform("bottom", {x:100 / 2, y:0, width:300}));			
 			
 			_hillsView = new HillsView();
-			_hills = new HillManager("hills",{hillStartY : 1000, rider:_hero, sliceWidth:100, roundFactor:5, sliceHeight:stage.stageHeight, widthHills:stage.stageWidth, registration:"topLeft", view:_hillsView});
+			_hills = new HillManager("Hills",{hillStartY : 1000, rider:_hero, sliceWidth:100, roundFactor:5, sliceHeight:stage.stageHeight, widthHills:stage.stageWidth, registration:"topLeft", view:_hillsView});
 			add(_hills);
 			
 			_obstaclesManager = new ObstacleManager("obstacleManager", {});

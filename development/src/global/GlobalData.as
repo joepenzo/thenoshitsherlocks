@@ -12,11 +12,33 @@ package global {
 		private var _currentCoinValue : Number = 0;
 		private var _currentHillY : Number = 0;
 		private var _currentHillX:Number = 0;
+		private var _nextHillY : Number = 0;
+		private var _nextHillX:Number = 0;
 		private var _HeroPos:Point = new Point(0,0);
 		
 		
 		public function GlobalData() {
 			super();
+		}
+
+		public function get nextHillX():Number
+		{
+			return _nextHillX;
+		}
+
+		public function set nextHillX(value:Number):void
+		{
+			_nextHillX = value;
+		}
+
+		public function get nextHillY():Number
+		{
+			return _nextHillY;
+		}
+
+		public function set nextHillY(value:Number):void
+		{
+			_nextHillY = value;
 		}
 
 		public function get heroPos():Point

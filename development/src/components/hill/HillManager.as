@@ -1,11 +1,19 @@
 package components.hill{
-	import citrus.objects.platformer.box2d.Hills;
-	import components.hill.HillsView;
-	import citrus.utils.AGameData;
-	import global.GlobalData;
-	import Box2D.Dynamics.b2FixtureDef;
-	import Box2D.Dynamics.b2BodyDef;
 	import Box2D.Collision.Shapes.b2PolygonShape;
+	import Box2D.Common.Math.b2Vec2;
+	import Box2D.Dynamics.b2Body;
+	import Box2D.Dynamics.b2BodyDef;
+	import Box2D.Dynamics.b2FixtureDef;
+	
+	import citrus.objects.platformer.box2d.Hero;
+	import citrus.objects.platformer.box2d.Hills;
+	import citrus.utils.AGameData;
+	
+	import components.hill.HillsView;
+	
+	import flash.utils.*;
+	
+	import global.GlobalData;
 
 	/**
 	 * @author ezrabotter
@@ -13,6 +21,8 @@ package components.hill{
 	public class HillManager extends Hills {
 		
 		private var _gameData:GlobalData;
+		private var _createGap:Boolean = false;;
+		private var _gc:int = 0;
 		
 		public function HillManager(name:String, params:Object=null)
 		{
@@ -24,11 +34,22 @@ package components.hill{
 		override protected function _prepareSlices():void {
 
 			if (view)
-				//@todo random width slices
 				(view as HillsView).init(sliceWidth, sliceHeight);
 
-			super._prepareSlices();
+			_slices = new Vector.<b2Body>();
+			
+			// Generate a line made of b2Vec2
+			_sliceVectorConstructor = new Vector.<b2Vec2>();
+			_sliceVectorConstructor.push(new b2Vec2(0, _realHeight));
+			_sliceVectorConstructor.push(new b2Vec2(sliceWidth/_box2D.scale, _realHeight));
+			
+			// fill the stage with slices of hills
+			for (var i:uint = 0; i < widthHills / sliceWidth * 1.5; ++i) {
+				_createSlice();
+			}
+			
 		}
+		
 		
 		override protected function _createSlice():void {
 			// Every time a new hill has to be created this algorithm predicts where the slices will be positioned
@@ -44,7 +65,6 @@ package components.hill{
 				
 //				_slicesInCurrentHill = hillWidth / sliceWidth;
 				_slicesInCurrentHill = hillWidth / sliceWidth*.5;
-				notice(_slicesInCurrentHill);
 				if(_slicesInCurrentHill % 2 != 0) ++_slicesInCurrentHill;
 				
 				_indexSliceInCurrentHill = 0;
@@ -101,21 +121,59 @@ package components.hill{
 		}
 		
 		override protected function _pushHill():void {
-			if (view)
-				(view as HillsView).createSlice(body, _nextYPoint * _box2D.scale, _currentYPoint * _box2D.scale);
-
+			if (view) {
+				if (_createGap) {
+					setTimeout(function() : void {
+						_createGap = false;
+					}, 300);
+				} else {
+					(view as HillsView).createSlice(body, _nextYPoint * _box2D.scale, _currentYPoint * _box2D.scale);
+				}
+			}
 			super._pushHill();
 			
 			_gameData.currentHillY = _currentYPoint * _box2D.scale;
 			_gameData.currentHillX = body.GetPosition().x * 30;
 			
+			_gameData.nextHillY = _nextYPoint * _box2D.scale;
+			
 		}
-
+		
 		override protected function _deleteHill(index:uint):void {
 
 			(view as HillsView).deleteHill(index);
 
 			super._deleteHill(index);
+		}
+		
+		
+		override protected function _checkHills():void {
+			
+			if (!rider)
+				rider = _ce.state.getFirstObjectByType(Hero) as Hero;
+
+			var length:uint = _slices.length;
+			
+			for (var i:uint = 0; i < length; ++i) {
+				
+				if (rider.x - _slices[i].GetPosition().x*_box2D.scale > widthHills/2) {
+					
+					_deleteHill(i);
+					--i;
+					_createSlice();
+					
+				} else
+					break;
+			}
+		}
+		
+		override public function update(timeDelta:Number):void {
+			super.update(timeDelta);
+			_checkHills();
+		}
+		
+		public function createGap():void {
+			_createGap = true;
 		}
 	}
 }
