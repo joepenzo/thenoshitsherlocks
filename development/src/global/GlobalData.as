@@ -8,7 +8,7 @@ package global {
 		
 		private var _gameScore : Number = 0;
 		private var _currentPowerValue : Number = 100;
-		
+		private var _currentCoinValue : Number = 0;
 		
 		public function GlobalData() {
 			super();
@@ -28,6 +28,14 @@ package global {
 
 		public function set currentPowerValue(currentPowerValue : Number) : void {
 			_currentPowerValue = currentPowerValue;
+		}
+
+		public function get currentCoinValue() : Number {
+			return _currentCoinValue;
+		}
+
+		public function set currentCoinValue(currentCoinValue : Number) : void {
+			_currentCoinValue = currentCoinValue;
 		}
 	}
 }

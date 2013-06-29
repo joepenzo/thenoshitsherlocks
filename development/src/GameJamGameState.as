@@ -1,17 +1,13 @@
 package {
-	import components.Collectables;
+	import global.Constants;
+	import components.Collectable;
 	import components.RunnerHero;
-	import flash.geom.Point;
 	import citrus.core.State;
-	import citrus.math.MathVector;
-	import citrus.objects.platformer.box2d.Hero;
 	import citrus.objects.platformer.box2d.Platform;
 	import citrus.physics.box2d.Box2D;
 
 	import global.GlobalData;
-
-	import flash.geom.Rectangle;
-
+	
 	/**
 	 * @author joepsuijkerbuijk
 	 */
@@ -19,6 +15,7 @@ package {
 		
 		private var _gameData : GlobalData;
 		private var _hero : RunnerHero;
+		private var _powerUp : Collectable;
 		
 		public function GameJamGameState() {
 			super();
@@ -45,11 +42,17 @@ package {
 			// In a GameState, the parameters are the object to follow, the offset, the bounds and the easing.
 			//view.camera.setUp(_hero, new Point(stage.stageWidth / 2, stage.stageHeight / 2), new Rectangle(0, 0, stage.stageWidth, stage.stageHeight), new Point(.25, .05));
 			
+			
+			//_powerUp = new Collectable("Power", Constants.Power, 1, {x: 400, y: 500});
+			//add(_powerUp);
+			
+//			_powerUp = new Collectable("Power", Constants.Power, 1, {x: 500, y: 500});
+//			add(_powerUp);
+
 			notice("State initialized");
 			debug(_hero.x);
 			error(_gameData.currentPowerValue);
 			
-			add(new Collectables("test", "2" ,{type:"Coole type", x: 50, y:50}));
 		}
 		
 		
