@@ -41,6 +41,7 @@ package components {
 			if (collider is RunnerHero) {
 				var hero : RunnerHero = collider as RunnerHero;
 				debug("slowdown");
+				hero.hurt();
 				hero.body.SetLinearVelocity( new b2Vec2(hero.body.GetLinearVelocity().x/2, hero.body.GetLinearVelocity().y) );
 			}
 

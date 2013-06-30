@@ -2,6 +2,7 @@ package components {
 	import Box2D.Common.Math.b2Vec2;
 	import Box2D.Dynamics.Contacts.b2Contact;
 	
+	import citrus.core.CitrusObject;
 	import citrus.input.controllers.Keyboard;
 	import citrus.math.MathVector;
 	import citrus.objects.CitrusSprite;
@@ -13,15 +14,28 @@ package components {
 	import citrus.physics.box2d.Box2DUtils;
 	import citrus.physics.box2d.IBox2DPhysicsObject;
 	
+	import com.greensock.*;
+	import com.greensock.TweenMax;
+	import com.greensock.easing.*;
+	
+	import fla.hero.DamageFullSpeed;
+	import fla.hero.Dead;
+	import fla.hero.JumpFullSpeed;
+	import fla.hero.RunFullSpeed;
+	import fla.hero.RunSlow;
+	import fla.hero.actionOneFullSpeed;
+	import fla.hero.actionTwoFullSpeed;
+	import fla.hero.actionTwoSlow;
+	
+	import flash.utils.*;
+	import flash.display.DisplayObject;
+	import flash.display.MovieClip;
 	import flash.display.Sprite;
 	import flash.geom.Point;
 	
-	import com.greensock.*;
-	import com.greensock.easing.*;
 	import global.Colors;
 	import global.GlobalData;
 	import global.Utils;
-	import com.greensock.TweenMax;
 
 	/**
 	 * @author joepsuijkerbuijk
@@ -33,6 +47,16 @@ package components {
 		private var bulletcounter:int=0;
 		private var _gameData : GlobalData;
 		
+		private var A_RUN : CitrusSprite;
+		private var A_ACTION_TWO : CitrusSprite;
+		private var A_ACTION_ONE : CitrusSprite;
+		private var A_DAMAGE : CitrusSprite;
+		private var A_JUMP : CitrusSprite;
+		private var A_DEAD : CitrusSprite;
+
+		private var _heroGraphicArray : Array = [];
+		private var _currAnimation:CitrusSprite;
+		
 		public function RunnerHero(name : String, params : Object = null) {
 					
 			super(name, params);
@@ -40,8 +64,55 @@ package components {
 			
 			_friction = 40;
 			maxVelocity = MAX_VELOCITY;
-					
+			hurtDuration = 600;
+			
+			
+			
+			
+			var sprite : MovieClip = new RunFullSpeed();
+			sprite.scaleX = sprite.scaleY = .3;
+			A_RUN  = new CitrusSprite("A_RUN", {view :  sprite});
+			A_RUN.visible = false;
+			_ce.state.add(A_RUN);
+			_heroGraphicArray.push(A_RUN);
+
+			sprite = new DamageFullSpeed();
+			sprite.scaleX = sprite.scaleY = .3;
+			A_DAMAGE  = new CitrusSprite("A_DAMAGE", {view :  sprite});
+			A_DAMAGE.visible = false;
+			_ce.state.add(A_DAMAGE);
+			_heroGraphicArray.push(A_DAMAGE);
+			
+			sprite = new JumpFullSpeed();
+			sprite.scaleX = sprite.scaleY = .3;
+			A_JUMP  = new CitrusSprite("A_JUMP", {view :  sprite});
+			A_JUMP.visible = false;
+			_ce.state.add(A_JUMP);
+			_heroGraphicArray.push(A_JUMP);
+
+			sprite  = new actionOneFullSpeed();
+			sprite.scaleX = sprite.scaleY = .3;
+			A_ACTION_ONE  = new CitrusSprite("A_ACTION_ONE", {view :  sprite});
+			A_ACTION_ONE.visible = false;
+			_ce.state.add(A_ACTION_ONE);
+			_heroGraphicArray.push(A_ACTION_ONE);
+			
+			sprite = new actionTwoFullSpeed();
+			sprite.scaleX = sprite.scaleY = .3;
+			A_ACTION_TWO = new CitrusSprite("A_ACTION_TWO", {view :  sprite});
+			A_ACTION_TWO.visible = false;
+			_ce.state.add(A_ACTION_TWO);
+			_heroGraphicArray.push(A_ACTION_TWO);
+
+			sprite = new Dead();
+			sprite.scaleX = sprite.scaleY = .3;
+			A_DEAD = new CitrusSprite("A_DEAD", {view :  sprite});
+			A_DEAD.visible = false;
+			_ce.state.add(A_DEAD);
+			_heroGraphicArray.push(A_DEAD);
+			
 		}
+		
 		
 		override public function addPhysics():void {
 			super.addPhysics();
@@ -67,15 +138,33 @@ package components {
 			_fixtureDef.filter.maskBits = PhysicsCollisionCategories.GetAll();
 		}
 
+		override public function hurt():void {
+			_hurt = true;
+			controlsEnabled = false;
+			_hurtTimeoutID = setTimeout(endHurtState, hurtDuration);
+			onTakeDamage.dispatch();
+			
+			//Makes sure that the hero is not frictionless while his control is disabled
+			if (_playerMovingHero)
+			{
+				_playerMovingHero = false;
+				_fixture.SetFriction(_friction);
+			}
+		}
 
 		override public function update(timeDelta:Number):void {
-			
 				
 			var velocity:b2Vec2 = _body.GetLinearVelocity();
 			
 			friction = _friction;
 			//velocity.Add(getSlopeBasedMoveAngle());
-			velocity.Add(new b2Vec2(getSlopeBasedMoveAngle().x/15, getSlopeBasedMoveAngle().y/10));
+			if (_hurt) {
+				error("hurt");
+				velocity.Add(new b2Vec2(-35,0));
+			} else {
+				velocity.Add(new b2Vec2(getSlopeBasedMoveAngle().x/15, getSlopeBasedMoveAngle().y/10));
+			}
+			
 			
 			if (controlsEnabled)
 			{
@@ -125,9 +214,42 @@ package components {
 			//update physics with new velocity
 			_body.SetLinearVelocity(velocity);
 			
+			updateGraphicPostition();
 			updateAnimation();
 			_gameData.heroPos = new Point(x,y);
 			
+		}
+		
+		private function updateGraphicPostition():void {
+			for each (var animation : CitrusSprite in _heroGraphicArray) {
+				animation.x = x;
+				animation.y = y - 30;
+			}
+		}
+		
+		override protected function updateAnimation():void {
+			var prevAnimation : CitrusSprite = _currAnimation;
+			
+			var walkingSpeed:Number = getWalkingSpeed();
+			if (_gameData.gameOver) {
+				_currAnimation = A_DEAD;
+			} else {
+				if ((_body.GetContactList() != null)) { // ON GROUND
+					_currAnimation = A_RUN;
+				} else { // JUMP
+					_currAnimation = A_JUMP;
+				}
+				if (_ce.input.justDid("shoot")){ 
+					_currAnimation = this.A_ACTION_TWO;
+				}
+			}
+			
+			if (prevAnimation != _currAnimation) {
+				for each (var animation : CitrusSprite in _heroGraphicArray) {
+					animation.visible = false;
+					if (_currAnimation == animation) animation.visible = true;
+				}
+			}
 			
 		}
 		
@@ -153,30 +275,10 @@ package components {
 			TweenMax.to(slope, .3 ,{y : slope.y - 10, rotation : 0, ease:Bounce.easeOut});	
 		}		
 		
+		
 		override public function handleBeginContact(contact:b2Contact):void {
 			
 			var collider:IBox2DPhysicsObject = Box2DUtils.CollisionGetOther(this, contact);
-			
-			/*if (_enemyClass && collider is _enemyClass)
-			{
-				if (_body.GetLinearVelocity().y < killVelocity && !_hurt)
-				{
-					hurt();
-					
-					//fling the hero
-					var hurtVelocity:b2Vec2 = _body.GetLinearVelocity();
-					hurtVelocity.y = -hurtVelocityY;
-					hurtVelocity.x = hurtVelocityX;
-					if (collider.x > x)
-						hurtVelocity.x = -hurtVelocityX;
-					_body.SetLinearVelocity(hurtVelocity);
-				}
-				else
-				{
-					_springOffEnemy = collider.y - height;
-					onGiveDamage.dispatch();
-				}
-			}*/
 			
 			//Collision angle if we don't touch a Sensor.
 			if (contact.GetManifold().m_localPoint && !(collider is Sensor)) //The normal property doesn't come through all the time. I think doesn't come through against sensors.

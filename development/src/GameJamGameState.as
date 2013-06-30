@@ -13,13 +13,12 @@ package {
 	import components.hill.HillManager;
 	import components.hill.HillsView;
 	
-	import fla.hero.HeroGraphics;
-	
 	import flash.display.Sprite;
 	import flash.geom.Point;
 	
 	import global.Colors;
 	import global.GlobalData;
+	import fla.hero.RunFullSpeed;
 
 	/**
 	 * @author joepsuijkerbuijk
@@ -36,8 +35,7 @@ package {
 		private var _gameOverHandled:Boolean = false;
 		
 		private var _mask:Sprite;
-		private var _tfManager:TextFieldManager;
-		private var _tfHolder:CitrusSprite;
+		private var _tfHolder:TextFieldManager;
 		
 		public function GameJamGameState() {
 			super();
@@ -60,9 +58,8 @@ package {
 			box2D.visible = true;
 			add(box2D);
 			
-//			var heroSprite = new CitrusSprite("test", {view : HeroGraphics}) );
 			
-			_hero = new RunnerHero("Hero", {x:0, y:-100, radius:.5, jumpHeight:15, view : HeroGraphics});
+			_hero = new RunnerHero("Hero", {x:0, y:-100, radius:.5, jumpHeight:15});//_hero = new RunnerHero("Hero", {x:0, y:-100, radius:.5, jumpHeight:15, view : HeroGraphics});
 			add(_hero);
 			
 			add(new Platform ("Start", {y : stage.stageHeight, x:-stage.stageWidth/2, height : stage.stageHeight, width: stage.stageWidth, view: new Rectangle(stage.stageWidth, stage.stageHeight, Colors.BLACK)}));
@@ -70,17 +67,12 @@ package {
 			_gameData.hillView = _hillsView;
 			_hills = new HillManager("Hills",{hillStartY : stage.stageHeight/2, rider:_hero, sliceWidth:100, roundFactor:5, sliceHeight:stage.stageHeight, widthHills:stage.stageWidth, registration:"topLeft", view:_hillsView});
 			add(_hills);
-			
-			_obstaclesManager = new ObstacleManager("obstacleManager", {});
-			add(_obstaclesManager);
 
-			//_tfHolder = new CitrusSprite("tfHolder" , {view: new TextFieldManager()})
-			//add(_tfHolder);
-			
-			var tfHolder:TextFieldManager = new TextFieldManager();
-			stage.addChild(tfHolder);
-			
-			view.camera.setUp(_hero, new Point(stage.stageWidth / 2, stage.stageHeight / 2));
+			_tfHolder = new TextFieldManager();
+			stage.addChild(_tfHolder);
+
+			_obstaclesManager = new ObstacleManager("obstacleManager", {});
+			add(_obstaclesManager);	
 			
 			_mask = new Sprite();
 			addChild(_mask);
@@ -90,6 +82,9 @@ package {
 			_mask.graphics.endFill();
 			_hillsView.mask = _mask;
 			
+			view.camera.setUp(_hero, new Point(stage.stageWidth / 2, stage.stageHeight / 2));
+			view.camera.bounds( new Rectangle(0,0,960,600);
+			
 			notice("State initialized");
 			
 			
@@ -98,7 +93,9 @@ package {
 		override public function update(timeDelta:Number):void {
 			super.update(timeDelta);
 			_hillsView.update();
+			_gameData.score++;
 			
+			_tfHolder.updateScore(_gameData.score);
 			
 			if (_gameData.gameOver && !_gameOverHandled) handleGameOver();
 		}
