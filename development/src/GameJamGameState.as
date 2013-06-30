@@ -1,4 +1,9 @@
 package {
+	import flash.utils.setInterval;
+	import global.Utils;
+	import global.Colors;
+	import flash.geom.ColorTransform;
+	import components.ObstacleManager;
 	import citrus.core.State;
 	import citrus.physics.box2d.Box2D;
 
@@ -16,13 +21,15 @@ package {
 	 * @author joepsuijkerbuijk
 	 */
 	public class GameJamGameState extends State {
-		
+	
 		private var _gameData : GlobalData;
 		private var _hero : RunnerHero;
 		private var _hillsView : HillsView;
 		private var _hills:HillManager;
 		private var _obstaclesManager:ObstacleManager;
 		private var _gameOverHandled:Boolean = false;
+		
+		public var _backgroundArt:BackgroundArt;
 		
 		public function GameJamGameState() {
 			super();
@@ -32,7 +39,11 @@ package {
 			super.initialize();
 			_gameData = _ce.gameData as GlobalData;
 			
-			_ce.stage.addChildAt(new BackgroundArt, 0);
+
+			_backgroundArt = new BackgroundArt;
+			_ce.stage.addChildAt(_backgroundArt, 0);
+			//var _backgroundTimout:int = 20000;
+			//setInterval(_backgroundArt.ChangeColor,_backgroundTimout);
 
 			var box2D:Box2D = new Box2D("box2D");
 			box2D.visible = true;
