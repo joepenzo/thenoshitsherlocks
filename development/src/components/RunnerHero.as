@@ -151,10 +151,10 @@ package components {
 		override public function update(timeDelta:Number):void {
 				
 			var velocity:b2Vec2 = _body.GetLinearVelocity();
-			if (x + _ce.state.view.camera.camPos.x <= 70) handleGamerOver();
+			
+			notice(x + _ce.state.view.camera.camPos.x);
 			
 			friction = _friction;
-			
 			//velocity.Add(getSlopeBasedMoveAngle());
 			if (_hurt) {
 				velocity.Add(new b2Vec2(-35,0));
@@ -287,18 +287,6 @@ package components {
 					updateCombinedGroundAngle();
 				//}
 			}
-		}
-		
-		public function handleGamerOver():void {
-			_gameData.gameOver = true;
-			body.SetAwake(false);
-			//TODO: SLOW DEZE SHIT DOWN MAN..
-			_ce.state.view.camera.followTarget = false;
-			TweenMax.to(this, 2.5, {y: y + _ce.stage.stageHeight, x:x + 100, onComplete: doPause });
-		}
-	
-		private function doPause() : void {
-			_ce.playing = false;
 		}
 		
 		

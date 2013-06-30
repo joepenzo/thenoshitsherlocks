@@ -47,7 +47,6 @@ package components {
 			}
 
 			if (collider is Missile) {
-				
 				var missile : Missile = collider as Missile;
 				missile.kill = true;
 				missile.destroy();
@@ -55,7 +54,6 @@ package components {
 				//body.SetActive(false);
 				kill = true;
 				destroy();
-				
 			}
 		
 			
