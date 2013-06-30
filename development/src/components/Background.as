@@ -1,4 +1,6 @@
 package components {
+	import flash.display.DisplayObject;
+	import flash.display.Graphics;
 	import fla.bg.*;
 	import flash.events.Event;
 	import flash.display.Sprite;
@@ -14,27 +16,29 @@ package components {
 	public class Background extends Sprite {
   	  	
 		private static var _backgroundTimout : int = 8000;
-			  
+		
 		public function Background(name:String) {
 			
 			switch(name) {
 				case "Game":
-					this.graphics.clear();
-					this.graphics.beginFill(Colors.BACKGROUND_BLACK);
-					this.graphics.drawRect(0, 0, Sizes.gameWidth, Sizes.gameHeight);
-					this.alpha = 0.2;			
+					
+					//this.graphics.clear();
+					var _bgcolor:Graphics = this.graphics;
+					_bgcolor.beginFill(Colors.BACKGROUND_BLUE);
+					_bgcolor.drawRect(0, 0, Sizes.gameWidth, Sizes.gameHeight);
 					setInterval(ChangeColor,_backgroundTimout);
-					
-					//var parallaxBg:parallaxBackground = new parallaxBackground();
-					//stage.addChild(parallaxBg);
-					
-					var _bg:back = new back();
-					_bg.x = 0;
-					this.addChild(_bg);
 					
 					var _hills:hillsbg = new hillsbg();
 					_hills.x = 0;
 					this.addChild(_hills);
+					
+					var _bg:back = new back();
+					_bg.x = 0;
+					_bg.alpha = 0.2;
+					this.addChildAt(_bg,0);
+					
+					//var parallaxBg:parallaxBackground = new parallaxBackground();
+					//stage.addChild(parallaxBg);
 										
 					break;
 				case "Menu":

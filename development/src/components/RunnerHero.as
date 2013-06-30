@@ -189,7 +189,7 @@ package components {
 				if (_ce.input.justDid("shoot")){
 					var bullet:Missile;
 					bullet = new Missile("bullet"+bulletcounter, {x:x + width, y:y, width:15, height:15, speed:15, angle:0, view: ""});
-					bulletcounter++
+					bulletcounter++;
 					_ce.state.add(bullet);
 				}
 				
