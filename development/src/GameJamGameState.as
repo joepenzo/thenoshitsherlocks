@@ -18,6 +18,7 @@ package {
 	import global.GlobalData;
 	import global.Utils;
 	import components.Rectangle;
+	import flash.display.Sprite;
 
 	/**
 	 * @author joepsuijkerbuijk
@@ -32,6 +33,7 @@ package {
 		private var _gameOverHandled:Boolean = false;
 		
 		public var _backgroundArt:BackgroundArt;
+		private var _mask:Sprite;
 		
 		public function GameJamGameState() {
 			super();
@@ -49,7 +51,7 @@ package {
 			var box2D:Box2D = new Box2D("box2D");
 			box2D.visible = true;
 			add(box2D);
-
+			
 			_hero = new RunnerHero("Hero", {x:0, y:-100, radius:.5, jumpHeight:15});
 			add(_hero);
 			//_hero.view = New 
@@ -67,6 +69,14 @@ package {
 			
 			view.camera.setUp(_hero, new Point(stage.stageWidth / 2, stage.stageHeight / 2));
 			notice("State initialized");
+			
+			_mask = new Sprite();
+			addChild(_mask);
+			_mask.graphics.clear();
+			_mask.graphics.beginFill(Colors.WHITE);
+			_mask.graphics.drawRect( 100,0 ,stage.stageWidth,stage.stageHeight);
+			_mask.graphics.endFill();
+			_hillsView.mask = _mask;
 		}
 		
 		override public function update(timeDelta:Number):void {
