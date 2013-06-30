@@ -39,7 +39,6 @@ package {
 			super.initialize();
 			_gameData = _ce.gameData as GlobalData;
 			
-
 			_backgroundArt = new BackgroundArt;
 			_ce.stage.addChildAt(_backgroundArt, 0);
 			//var _backgroundTimout:int = 20000;
