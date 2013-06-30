@@ -193,7 +193,7 @@ package components {
 					velocity.y -= jumpAcceleration;
 				}
 				
-				if (_ce.input.justDid("shoot")){
+				if (._ce.input.justDid("shoot")){
 					var bullet:Bullet;
 					bullet = new Bullet("bullet"+bulletcounter, {x:x + width, y:y, width:15, height:15, speed:15, angle:0, view: fla.graphics.Bullet});
 					bulletcounter++
