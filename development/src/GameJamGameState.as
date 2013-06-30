@@ -1,4 +1,10 @@
 package {
+	import citrus.core.CitrusObject;
+	import flash.display.MovieClip;
+	import com.greensock.BlitMask;
+	import global.Sizes;
+	import components.parallaxBackground;
+	import fla.bg.*;
 	import citrus.core.State;
 	import components.Background;
 	import components.ObstacleManager;
@@ -78,7 +84,7 @@ package {
 			_mask.graphics.drawRect( 100,0 ,stage.stageWidth,stage.stageHeight);
 			_mask.graphics.endFill();
 			_hillsView.mask = _mask;
-			
+			 
 			notice("State initialized");
 		}
 		
