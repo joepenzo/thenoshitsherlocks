@@ -41,18 +41,10 @@ package components {
 
 			if (collider is RunnerHero) {
 				var hero : RunnerHero = collider as RunnerHero;
-				
-				_gameData.gameOver = true;
-
-				hero.body.SetAwake(false);
-				_ce.state.view.camera.followTarget = false;
-				TweenMax.to(hero, 2.5, {y: hero.y + _ce.stage.stageHeight, x:hero.x + 100, onComplete: doPause });
+				hero.handleGamerOver();
 			}
 		}
 		
-		private function doPause() : void {
-			_ce.playing = false;
-		}
 		
 		override public function update(timeDelta:Number):void {
 			super.update(timeDelta);

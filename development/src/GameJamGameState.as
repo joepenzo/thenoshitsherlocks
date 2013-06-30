@@ -52,16 +52,13 @@ package {
 			
 			_ce.input.keyboard.addKeyAction("shoot", Keyboard.COMMAND);
 			_ce.input.keyboard.addKeyAction("shoot", Keyboard.CTRL);
-			
-			//var _backgroundTimout:int = 20000;
-			//setInterval(_backgroundArt.ChangeColor,_backgroundTimout);
 
 			var box2D:Box2D = new Box2D("box2D");
 			box2D.visible = true;
 			add(box2D);
 			
 			
-			_hero = new RunnerHero("Hero", {x:0, y:-100, radius:.5, jumpHeight:15});//_hero = new RunnerHero("Hero", {x:0, y:-100, radius:.5, jumpHeight:15, view : HeroGraphics});
+			_hero = new RunnerHero("Hero", {x:150, y:-100, radius:.5, jumpHeight:15});//_hero = new RunnerHero("Hero", {x:0, y:-100, radius:.5, jumpHeight:15, view : HeroGraphics});
 			add(_hero);
 			
 			add(new Platform ("Start", {y : stage.stageHeight, x:-stage.stageWidth/2, height : stage.stageHeight, width: stage.stageWidth, view: new RectangleSprite(stage.stageWidth, stage.stageHeight, Colors.BLACK)}));

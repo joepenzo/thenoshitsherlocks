@@ -158,7 +158,7 @@ package components {
 				
 			var velocity:b2Vec2 = _body.GetLinearVelocity();
 			
-			notice(x + _ce.state.view.camera.camPos.x);
+			if (x + _ce.state.view.camera.camPos.x <= 70) handleGamerOver();
 			
 			friction = _friction;
 			//velocity.Add(getSlopeBasedMoveAngle());
@@ -298,5 +298,15 @@ package components {
 		
 		
 		
+		public function handleGamerOver():void {
+			_gameData.gameOver = true;
+			body.SetAwake(false);
+			_ce.state.view.camera.followTarget = false;
+			TweenMax.to(this, 2.5, {y: y + _ce.stage.stageHeight, x:x + 100, onComplete: doPause });
+		}
+		
+		private function doPause() : void {
+			_ce.playing = false;
+		}
 	}
 }
