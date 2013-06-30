@@ -12,6 +12,8 @@ package components {
 	import citrus.physics.box2d.Box2DUtils;
 	import citrus.physics.box2d.IBox2DPhysicsObject;
 
+	import fla.graphics.AllSlopes;
+	import fla.graphics.Bullet;
 	import fla.hero.DamageFullSpeed;
 	import fla.hero.Dead;
 	import fla.hero.JumpFullSpeed;
@@ -19,15 +21,12 @@ package components {
 	import fla.hero.actionOneFullSpeed;
 	import fla.hero.actionTwoFullSpeed;
 
-	import global.Colors;
 	import global.GlobalData;
-	import global.Utils;
 
 	import com.greensock.*;
 	import com.greensock.easing.*;
 
 	import flash.display.MovieClip;
-	import flash.display.Sprite;
 	import flash.geom.Point;
 	import flash.utils.*;
 
@@ -50,6 +49,7 @@ package components {
 
 		private var _heroGraphicArray : Array = [];
 		private var _currAnimation:CitrusSprite;
+		private var _collisionAngle:Number;
 		
 		public function RunnerHero(name : String, params : Object = null) {
 					
@@ -151,10 +151,10 @@ package components {
 		override public function update(timeDelta:Number):void {
 				
 			var velocity:b2Vec2 = _body.GetLinearVelocity();
+			
 			if (x + _ce.state.view.camera.camPos.x <= 70) handleGamerOver();
 			
 			friction = _friction;
-			
 			//velocity.Add(getSlopeBasedMoveAngle());
 			if (_hurt) {
 				velocity.Add(new b2Vec2(-35,0));
@@ -188,7 +188,7 @@ package components {
 				
 				if (_ce.input.justDid("shoot")){
 					var bullet:Missile;
-					bullet = new Missile("bullet"+bulletcounter, {x:x + width, y:y, width:15, height:15, speed:15, angle:0, view: ""});
+					bullet = new Missile("bullet"+bulletcounter, {x:x + width, y:y - 60, width:15, height:15, speed:15, angle:0, view: fla.graphics.Bullet});
 					bulletcounter++;
 					_ce.state.add(bullet);
 				}
@@ -251,25 +251,29 @@ package components {
 		}
 		
 		private function drawSlope():void {
-			var slope:Sprite = new Sprite();
-			slope.graphics.clear();
-			slope.graphics.beginFill(Colors.BLACK);
-			slope.graphics.moveTo(0, 0); 
-			slope.graphics.lineTo(150,Utils.RandomIntBetween(-80,-130)); 
-			slope.graphics.lineTo(150,100); 
-			slope.graphics.lineTo(150,0); 
-			slope.graphics.lineTo(0,0); 
-			slope.graphics.endFill();
+//			var slope:Sprite = new Sprite();
+//			slope.graphics.clear();
+//			slope.graphics.beginFill(Colors.BLACK);
+//			slope.graphics.moveTo(0, 0); 
+//			slope.graphics.lineTo(150,Utils.RandomIntBetween(-80,-130)); 
+//			slope.graphics.lineTo(150,100); 
+//			slope.graphics.lineTo(150,0); 
+//			slope.graphics.lineTo(0,0); 
+//			slope.graphics.endFill();
 			
-			//this.view = slope
+			var slope : AllSlopes = new fla.graphics.AllSlopes();
+			var random : int = Math.random() * (slope.totalFrames)+1;
+			slope.gotoAndStop(random);			
+
 			slope.rotation = 30;	
 			
 			slope.x = x - 35; 
-			slope.y = y + 50;
+			slope.y = y + 25;
 			
 			_gameData.hillView.addChild(slope);
 			
-			TweenMax.to(slope, .3 ,{y : slope.y - 10, rotation : 0, ease:Bounce.easeOut});	
+			TweenMax.to(slope, .3 ,{y : slope.y - 10, rotation : 0, ease:Bounce.easeOut});
+			TweenMax.to(slope, .3 ,{delay: .6, y : slope.y + 60, rotation : 60, ease:Bounce.easeOut});
 		}		
 		
 		
@@ -280,7 +284,7 @@ package components {
 			//Collision angle if we don't touch a Sensor.
 			if (contact.GetManifold().m_localPoint && !(collider is Sensor)) //The normal property doesn't come through all the time. I think doesn't come through against sensors.
 			{			
-				var collisionAngle:Number = (((new MathVector(contact.normal.x, contact.normal.y).angle) * 180 / Math.PI) + 360) % 360;// 0º <-> 360º
+				_collisionAngle = (((new MathVector(contact.normal.x, contact.normal.y).angle) * 180 / Math.PI) + 360) % 360;// 0º <-> 360º
 				//if ((collisionAngle > 45 && collisionAngle < 135)){
 					_groundContacts.push(collider.body.GetFixtureList());
 					_onGround = true;
@@ -289,23 +293,20 @@ package components {
 			}
 		}
 		
+		
+		
+		
 		public function handleGamerOver():void {
 			_gameData.gameOver = true;
 			body.SetAwake(false);
-			
 			//TODO: SLOW DEZE SHIT DOWN MAN..
 			//TODO: Zet background uit..
-			
 			_ce.state.view.camera.followTarget = false;
 			TweenMax.to(this, 2.5, {y: y + _ce.stage.stageHeight, x:x + 100, onComplete: doPause });
 		}
-	
+		
 		private function doPause() : void {
 			_ce.playing = false;
 		}
-		
-		
-		
-		
 	}
 }

@@ -21,12 +21,5 @@ package global {
 					len++;
 			return len;
 		}
-		
-		public static function scaleObject(object:Object,scaleX:Number,scaleY:Number):Object {
-			object.scaleX = scaleX;
-			object.scaleY = scaleY;
-			return object;
-		}
-		
 	}
 }

@@ -9,7 +9,6 @@ package components {
 	import com.greensock.plugins.ColorTransformPlugin;
 	import com.greensock.plugins.TweenPlugin;
 
-	import flash.display.Graphics;
 	import flash.display.Sprite;
 	import flash.utils.setInterval;
 	TweenPlugin.activate([ColorTransformPlugin]); //activation is permanent in the SWF, so this line only needs to be run once.
@@ -20,15 +19,13 @@ package components {
 		private var _hills:hillsbg;
 		private var _bg:back;
 		
+			  
 		public function Background(name:String) {
-			
 			switch(name) {
 				case "Game":
-					
-					//this.graphics.clear();
-					var _bgcolor:Graphics = this.graphics;
-					_bgcolor.beginFill(Colors.BACKGROUND_BLUE);
-					_bgcolor.drawRect(0, 0, Sizes.gameWidth, Sizes.gameHeight);
+					this.graphics.clear();
+					this.graphics.beginFill(Colors.BACKGROUND_RED);
+					this.graphics.drawRect(0, 0, Sizes.gameWidth, Sizes.gameHeight);			
 					setInterval(ChangeColor,_backgroundTimout);
 					
 					_hills = new hillsbg();
@@ -42,7 +39,6 @@ package components {
 					
 					//var parallaxBg:parallaxBackground = new parallaxBackground();
 					//stage.addChild(parallaxBg);
-										
 					break;
 				case "Menu":
 					this.graphics.clear();
@@ -53,7 +49,7 @@ package components {
 		}
 		
 		public function ChangeColor():void {			
-			var colors:Array = [Colors.BACKGROUND_BLUE,Colors.BACKGROUND_BLACK,Colors.BACKGROUND_ORANGE,Colors.BACKGROUND_GREEN];
+			var colors:Array = [Colors.BACKGROUND_BLUE,Colors.BACKGROUND_RED,Colors.BACKGROUND_ORANGE];
 			var bgColor:uint = Utils.getRandomElementOf(colors) as uint;
 			TweenLite.to(this, 1, {colorTransform:{tint:bgColor, tintAmount:0.5}}); 
 		}		

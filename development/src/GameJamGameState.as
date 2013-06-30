@@ -6,7 +6,7 @@ package {
 	import citrus.objects.platformer.box2d.Crate;
 	import citrus.objects.platformer.box2d.Platform;
 	import citrus.physics.box2d.Box2D;
-
+	
 	import components.Background;
 	import components.ObstacleManager;
 	import components.RectangleSprite;
@@ -24,7 +24,7 @@ package {
 	import flash.display.Sprite;
 	import flash.geom.Point;
 	import flash.geom.Rectangle;
-
+	
 	import global.Colors;
 	import global.GlobalData;
 
@@ -44,19 +44,14 @@ package {
 		
 		private var _mask:Sprite;
 		private var _tfHolder:TextFieldManager;
+		private var _emitter:Emitter;
 		private var _indicator:Crate;
 		private var _fallingRocks:CitrusSprite;
-//		private var _emitter:Emitter;
-
+		
 		public function GameJamGameState() {
 			super();
 		}
 		
-		public function get tfHolder():TextFieldManager
-		{
-			return _tfHolder;
-		}
-
 		override public function initialize():void {
 			super.initialize();
 			_gameData = _ce.gameData as GlobalData;
@@ -122,7 +117,10 @@ package {
 			_hillsView.mask = _mask;
 			
 			view.camera.setUp(_hero, new Point(stage.stageWidth / 2 - _hero.width, stage.stageHeight / 2));
+			//view.camera.offset = new Point(300,stage.stageHeight / 2);			
 			notice("State initialized");
+			
+			
 		}
 		
 		override public function update(timeDelta:Number):void {
@@ -135,12 +133,6 @@ package {
 			_indicator.x = -view.camera.camPos.x + 80;
 			_fallingRocks.x = -view.camera.camPos.x + 170;
 			_fallingRocks.y = _indicator.y - 75 ;
-			if ( _indicator.y >= 1000) { 
-				_indicator.x = 100; 
-				_indicator.y = 0
-			}
-			
-			//log(_indicator.y + "   " + view.camera.camPos.y);
 			
 //			_emitter.x = -view.camera.camPos.x + 60 + 300;
 //			_emitter.y = -view.camera.camPos.y + 100;
@@ -149,7 +141,7 @@ package {
 			if (_gameData.gameOver && !_gameOverHandled) handleGameOver();
 		}
 		
-		public function handleGameOver():void {
+		private function handleGameOver():void {
 			_gameOverHandled = true;
 			fatal("GAMEOVER");
 			//TODO: timeout ofzo, gaat tering snel hier..
@@ -161,6 +153,7 @@ package {
 			_tfHolder.visible = false;			
 		}		
 
+		
 		
 	}
 }
