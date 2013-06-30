@@ -1,20 +1,23 @@
 package {
 	import citrus.core.State;
-	import components.Background;
-	import components.ObstacleManager;
-	import components.RunnerHero;
-	import components.hill.HillManager;
-	import components.hill.HillsView;
 	import citrus.input.controllers.Keyboard;
 	import citrus.objects.CitrusSprite;
 	import citrus.objects.platformer.box2d.Platform;
 	import citrus.physics.box2d.Box2D;
+	
+	import components.Background;
+	import components.ObstacleManager;
 	import components.Rectangle;
+	import components.RunnerHero;
 	import components.TextFieldManager;
-	import global.Colors;
-	import global.GlobalData;
+	import components.hill.HillManager;
+	import components.hill.HillsView;
+	
 	import flash.display.Sprite;
 	import flash.geom.Point;
+	
+	import global.Colors;
+	import global.GlobalData;
 
 	/**
 	 * @author joepsuijkerbuijk
@@ -32,6 +35,7 @@ package {
 		
 		private var _mask:Sprite;
 		private var _tfManager:TextFieldManager;
+		private var _tfHolder:CitrusSprite;
 		
 		public function GameJamGameState() {
 			super();
@@ -63,11 +67,16 @@ package {
 			_hillsView = new HillsView();
 			_hills = new HillManager("Hills",{hillStartY : stage.stageHeight/2, rider:_hero, sliceWidth:100, roundFactor:5, sliceHeight:stage.stageHeight, widthHills:stage.stageWidth, registration:"topLeft", view:_hillsView});
 			add(_hills);
+			_gameData.hillView = _hillsView;
 			
 			_obstaclesManager = new ObstacleManager("obstacleManager", {});
 			add(_obstaclesManager);
 
-			add( new CitrusSprite("tfHolder" , {view: new TextFieldManager()}));
+			//_tfHolder = new CitrusSprite("tfHolder" , {view: new TextFieldManager()})
+			//add(_tfHolder);
+			
+			var tfHolder:TextFieldManager = new TextFieldManager();
+			stage.addChild(tfHolder);
 			
 			view.camera.setUp(_hero, new Point(stage.stageWidth / 2, stage.stageHeight / 2));
 			
@@ -75,16 +84,19 @@ package {
 			addChild(_mask);
 			_mask.graphics.clear();
 			_mask.graphics.beginFill(Colors.WHITE);
-			_mask.graphics.drawRect( 100,0 ,stage.stageWidth,stage.stageHeight);
+			_mask.graphics.drawRect( 60,0 ,stage.stageWidth,stage.stageHeight);
 			_mask.graphics.endFill();
 			_hillsView.mask = _mask;
 			
 			notice("State initialized");
+			
+			
 		}
 		
 		override public function update(timeDelta:Number):void {
 			super.update(timeDelta);
 			_hillsView.update();
+			
 			
 			if (_gameData.gameOver && !_gameOverHandled) handleGameOver();
 		}

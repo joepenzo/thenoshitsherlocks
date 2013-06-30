@@ -1,23 +1,25 @@
 package components {
 	import Box2D.Common.Math.b2Vec2;
+	import Box2D.Dynamics.Contacts.b2Contact;
 	
+	import citrus.input.controllers.Keyboard;
+	import citrus.math.MathVector;
+	import citrus.objects.CitrusSprite;
 	import citrus.objects.platformer.box2d.Hero;
+	import citrus.objects.platformer.box2d.Missile;
+	import citrus.objects.platformer.box2d.Sensor;
 	import citrus.physics.PhysicsCollisionCategories;
 	import citrus.physics.box2d.Box2DShapeMaker;
-	
-	import flash.geom.Point;
 	import citrus.physics.box2d.Box2DUtils;
-		
-	import citrus.input.controllers.Keyboard;
-	import global.GlobalData;
-	import citrus.math.MathVector;
 	import citrus.physics.box2d.IBox2DPhysicsObject;
-	import Box2D.Dynamics.Contacts.b2Contact;
-	import citrus.objects.platformer.box2d.Sensor;
+	
 	import flash.display.Sprite;
-	import citrus.objects.CitrusSprite;
+	import flash.geom.Point;
+	
+	import global.Colors;
+	import global.GlobalData;
 	import global.Utils;
-	import citrus.objects.platformer.box2d.Missile;
+	import com.greensock.TweenMax;
 
 	/**
 	 * @author joepsuijkerbuijk
@@ -127,8 +129,25 @@ package components {
 		}
 		
 		private function drawSlope():void {
-			var slope:CitrusSprite = new SlopeSprite("slope", {x : x - 25, y: y + 40});
-			_ce.state.add(slope);
+			var slope:Sprite = new Sprite();
+			slope.graphics.clear();
+			slope.graphics.beginFill(Colors.BLACK);
+			slope.graphics.moveTo(0, 0); 
+			slope.graphics.lineTo(150,Utils.RandomIntBetween(-80,-130)); 
+			slope.graphics.lineTo(150,100); 
+			slope.graphics.lineTo(150,0); 
+			slope.graphics.lineTo(0,0); 
+			slope.graphics.endFill();
+			
+			//this.view = slope
+			slope.rotation = 25;	
+			
+			slope.x = x - 35; 
+			slope.y = y + 50;
+			
+			_gameData.hillView.addChild(slope);
+			
+			TweenMax.to(slope, .2 ,{y : slope.y - 10, rotation : 0});	
 		}		
 		
 		override public function handleBeginContact(contact:b2Contact):void {
