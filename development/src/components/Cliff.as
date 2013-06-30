@@ -56,7 +56,7 @@ package components {
 		
 		override public function update(timeDelta:Number):void {
 			super.update(timeDelta);
-			if (x <= _hero.x - _hero.width) {
+			if (x <= _hero.x - 100) {
 				destroy();
 				updateCallEnabled = false;
 			} 			

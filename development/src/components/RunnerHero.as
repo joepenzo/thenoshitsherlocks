@@ -1,41 +1,35 @@
 package components {
+	import citrus.objects.platformer.box2d.Missile;
 	import Box2D.Common.Math.b2Vec2;
 	import Box2D.Dynamics.Contacts.b2Contact;
-	
-	import citrus.core.CitrusObject;
-	import citrus.input.controllers.Keyboard;
+
 	import citrus.math.MathVector;
 	import citrus.objects.CitrusSprite;
 	import citrus.objects.platformer.box2d.Hero;
-	import citrus.objects.platformer.box2d.Missile;
 	import citrus.objects.platformer.box2d.Sensor;
 	import citrus.physics.PhysicsCollisionCategories;
 	import citrus.physics.box2d.Box2DShapeMaker;
 	import citrus.physics.box2d.Box2DUtils;
 	import citrus.physics.box2d.IBox2DPhysicsObject;
-	
-	import com.greensock.*;
-	import com.greensock.TweenMax;
-	import com.greensock.easing.*;
-	
+
 	import fla.hero.DamageFullSpeed;
 	import fla.hero.Dead;
 	import fla.hero.JumpFullSpeed;
 	import fla.hero.RunFullSpeed;
-	import fla.hero.RunSlow;
 	import fla.hero.actionOneFullSpeed;
 	import fla.hero.actionTwoFullSpeed;
-	import fla.hero.actionTwoSlow;
-	
-	import flash.utils.*;
-	import flash.display.DisplayObject;
-	import flash.display.MovieClip;
-	import flash.display.Sprite;
-	import flash.geom.Point;
-	
+
 	import global.Colors;
 	import global.GlobalData;
 	import global.Utils;
+
+	import com.greensock.*;
+	import com.greensock.easing.*;
+
+	import flash.display.MovieClip;
+	import flash.display.Sprite;
+	import flash.geom.Point;
+	import flash.utils.*;
 
 	/**
 	 * @author joepsuijkerbuijk
@@ -144,7 +138,7 @@ package components {
 			_hurtTimeoutID = setTimeout(endHurtState, hurtDuration);
 			onTakeDamage.dispatch();
 			
-			TweenMax.to(_ce.state.view.camera.offset, 2, {x : _ce.state.view.camera.offset.x - 200} );
+			TweenMax.to(_ce.state.view.camera.offset, 2, {x : _ce.state.view.camera.offset.x - 50} );
 			
 			//Makes sure that the hero is not frictionless while his control is disabled
 			if (_playerMovingHero)
@@ -194,7 +188,7 @@ package components {
 				
 				if (_ce.input.justDid("shoot")){
 					var bullet:Missile;
-					bullet = new Missile("bullet"+bulletcounter, {x:x + width, y:y, width:10, height:6, speed:15, angle:0});
+					bullet = new Missile("bullet"+bulletcounter, {x:x + width, y:y, width:15, height:15, speed:15, angle:0, view: ""});
 					bulletcounter++
 					_ce.state.add(bullet);
 				}
