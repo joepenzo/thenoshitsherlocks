@@ -17,6 +17,7 @@ package global {
 		private var _nextHillX:Number = 0;
 		private var _HeroPos:Point = new Point(0,0);
 		private var _slopeView : Sprite;
+		//_tfHolder
 		
 		private var _gameOver:Boolean = false;
 		
