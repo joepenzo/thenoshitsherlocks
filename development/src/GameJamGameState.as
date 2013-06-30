@@ -1,24 +1,21 @@
 package {
-	import citrus.core.CitrusObject;
-	import flash.display.MovieClip;
-	import com.greensock.BlitMask;
-	import global.Sizes;
-	import components.parallaxBackground;
-	import fla.bg.*;
 	import citrus.core.State;
-	import components.Background;
-	import components.ObstacleManager;
-	import components.RunnerHero;
-	import components.hill.HillManager;
-	import components.hill.HillsView;
 	import citrus.input.controllers.Keyboard;
 	import citrus.objects.CitrusSprite;
 	import citrus.objects.platformer.box2d.Platform;
 	import citrus.physics.box2d.Box2D;
+
+	import components.Background;
+	import components.ObstacleManager;
 	import components.Rectangle;
+	import components.RunnerHero;
 	import components.TextFieldManager;
+	import components.hill.HillManager;
+	import components.hill.HillsView;
+
 	import global.Colors;
 	import global.GlobalData;
+
 	import flash.display.Sprite;
 	import flash.geom.Point;
 
