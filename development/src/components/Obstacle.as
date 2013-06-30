@@ -40,14 +40,18 @@ package components {
 
 			if (collider is RunnerHero) {
 				var hero : RunnerHero = collider as RunnerHero;
+				debug("slowdown");
 				hero.body.SetLinearVelocity( new b2Vec2(hero.body.GetLinearVelocity().x/2, hero.body.GetLinearVelocity().y) );
 			}
 
 			if (collider is Missile) {
-				notice("MISSLE OP DE TREE");
-				//var missile : Missile = collider as Missile;
-				this.destroy();
-				updateCallEnabled = false;
+				var missile : Missile = collider as Missile;
+				missile.kill = true;
+				missile.destroy();
+				
+				//body.SetActive(false);
+				kill = true;
+				destroy();
 			}
 		
 			
@@ -69,6 +73,7 @@ package components {
 		override public function update(timeDelta:Number):void {
 			super.update(timeDelta);
 			if (x <= _hero.x - _ce.stage.stageWidth) {
+				kill = true;
 				destroy();
 				updateCallEnabled = false;
 			} 			
