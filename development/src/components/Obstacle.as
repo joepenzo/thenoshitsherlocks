@@ -13,6 +13,8 @@ package components {
 	import citrus.objects.platformer.box2d.Sensor;
 	import Box2D.Common.Math.b2Vec2;
 	import nape.geom.Vec2;
+	import citrus.objects.platformer.box2d.Missile;
+
 	import citrus.core.CitrusObject;
 
 	/**
@@ -39,6 +41,13 @@ package components {
 			if (collider is RunnerHero) {
 				var hero : RunnerHero = collider as RunnerHero;
 				hero.body.SetLinearVelocity( new b2Vec2(hero.body.GetLinearVelocity().x/2, hero.body.GetLinearVelocity().y) );
+			}
+
+			if (collider is Missile) {
+				notice("MISSLE OP DE TREE");
+				//var missile : Missile = collider as Missile;
+				this.destroy();
+				updateCallEnabled = false;
 			}
 		
 			

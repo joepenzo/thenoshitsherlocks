@@ -22,7 +22,7 @@ package components
 			slope.graphics.lineTo(150,0); 
 			slope.graphics.lineTo(0,0); 
 			slope.graphics.endFill();
-			
+			 
 			this.view = slope
 			this.rotation = 25;	
 				

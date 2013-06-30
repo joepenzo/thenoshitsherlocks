@@ -1,21 +1,23 @@
 package {
-	import flash.utils.setInterval;
-	import global.Utils;
-	import global.Colors;
-	import flash.geom.ColorTransform;
-	import components.ObstacleManager;
 	import citrus.core.State;
+	import citrus.input.controllers.Keyboard;
+	import citrus.objects.platformer.box2d.Platform;
 	import citrus.physics.box2d.Box2D;
-
+	
 	import components.BackgroundArt;
+	import components.ObstacleManager;
 	import components.RunnerHero;
 	import components.hill.HillManager;
 	import components.hill.HillsView;
-
-	import global.GlobalData;
-
+	
+	import flash.geom.ColorTransform;
 	import flash.geom.Point;
-	import components.ObstacleManager;
+	import flash.utils.setInterval;
+	
+	import global.Colors;
+	import global.GlobalData;
+	import global.Utils;
+	import components.Rectangle;
 
 	/**
 	 * @author joepsuijkerbuijk
@@ -48,15 +50,20 @@ package {
 			box2D.visible = true;
 			add(box2D);
 
-			_hero = new RunnerHero("Hero", {x:100, y:-100, radius:.5, jumpHeight:15});
+			_hero = new RunnerHero("Hero", {x:0, y:-100, radius:.5, jumpHeight:15});
 			add(_hero);
-				
+			//_hero.view = New 
+			
+			add(new Platform ("Start", {y : stage.stageHeight, x:-stage.stageWidth/2, height : stage.stageHeight, width: stage.stageWidth, view: new Rectangle(stage.stageWidth, stage.stageHeight, Colors.BLACK)}));
 			_hillsView = new HillsView();
 			_hills = new HillManager("Hills",{hillStartY : stage.stageHeight/2, rider:_hero, sliceWidth:100, roundFactor:5, sliceHeight:stage.stageHeight, widthHills:stage.stageWidth, registration:"topLeft", view:_hillsView});
 			add(_hills);
 			
 			_obstaclesManager = new ObstacleManager("obstacleManager", {});
 			add(_obstaclesManager);
+
+			_ce.input.keyboard.addKeyAction("shoot", Keyboard.COMMAND);
+			_ce.input.keyboard.addKeyAction("shoot", Keyboard.CTRL);
 			
 			view.camera.setUp(_hero, new Point(stage.stageWidth / 2, stage.stageHeight / 2));
 			notice("State initialized");
