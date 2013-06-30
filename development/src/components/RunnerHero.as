@@ -16,6 +16,8 @@ package components {
 	import flash.display.Sprite;
 	import flash.geom.Point;
 	
+	import com.greensock.*;
+	import com.greensock.easing.*;
 	import global.Colors;
 	import global.GlobalData;
 	import global.Utils;
@@ -67,7 +69,8 @@ package components {
 
 
 		override public function update(timeDelta:Number):void {
-
+			
+				
 			var velocity:b2Vec2 = _body.GetLinearVelocity();
 			
 			friction = _friction;
@@ -140,14 +143,14 @@ package components {
 			slope.graphics.endFill();
 			
 			//this.view = slope
-			slope.rotation = 25;	
+			slope.rotation = 30;	
 			
 			slope.x = x - 35; 
 			slope.y = y + 50;
 			
 			_gameData.hillView.addChild(slope);
 			
-			TweenMax.to(slope, .2 ,{y : slope.y - 10, rotation : 0});	
+			TweenMax.to(slope, .3 ,{y : slope.y - 10, rotation : 0, ease:Bounce.easeOut});	
 		}		
 		
 		override public function handleBeginContact(contact:b2Contact):void {

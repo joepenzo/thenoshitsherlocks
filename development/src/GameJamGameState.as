@@ -13,6 +13,8 @@ package {
 	import components.hill.HillManager;
 	import components.hill.HillsView;
 	
+	import fla.hero.HeroGraphics;
+	
 	import flash.display.Sprite;
 	import flash.geom.Point;
 	
@@ -58,16 +60,16 @@ package {
 			box2D.visible = true;
 			add(box2D);
 			
-			_hero = new RunnerHero("Hero", {x:0, y:-100, radius:.5, jumpHeight:15});
+//			var heroSprite = new CitrusSprite("test", {view : HeroGraphics}) );
+			
+			_hero = new RunnerHero("Hero", {x:0, y:-100, radius:.5, jumpHeight:15, view : HeroGraphics});
 			add(_hero);
-							
-			//_hero.view = New 
 			
 			add(new Platform ("Start", {y : stage.stageHeight, x:-stage.stageWidth/2, height : stage.stageHeight, width: stage.stageWidth, view: new Rectangle(stage.stageWidth, stage.stageHeight, Colors.BLACK)}));
 			_hillsView = new HillsView();
+			_gameData.hillView = _hillsView;
 			_hills = new HillManager("Hills",{hillStartY : stage.stageHeight/2, rider:_hero, sliceWidth:100, roundFactor:5, sliceHeight:stage.stageHeight, widthHills:stage.stageWidth, registration:"topLeft", view:_hillsView});
 			add(_hills);
-			_gameData.hillView = _hillsView;
 			
 			_obstaclesManager = new ObstacleManager("obstacleManager", {});
 			add(_obstaclesManager);
