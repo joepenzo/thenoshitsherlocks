@@ -1,35 +1,43 @@
 package components {
-	import citrus.objects.platformer.box2d.Missile;
 	import Box2D.Common.Math.b2Vec2;
 	import Box2D.Dynamics.Contacts.b2Contact;
-
+	
+	import citrus.core.CitrusObject;
+	import citrus.input.controllers.Keyboard;
 	import citrus.math.MathVector;
 	import citrus.objects.CitrusSprite;
 	import citrus.objects.platformer.box2d.Hero;
+	import citrus.objects.platformer.box2d.Missile;
 	import citrus.objects.platformer.box2d.Sensor;
 	import citrus.physics.PhysicsCollisionCategories;
 	import citrus.physics.box2d.Box2DShapeMaker;
 	import citrus.physics.box2d.Box2DUtils;
 	import citrus.physics.box2d.IBox2DPhysicsObject;
-
+	
+	import com.greensock.*;
+	import com.greensock.TweenMax;
+	import com.greensock.easing.*;
+	
+	import fla.graphics.AllSlopes;
+	import fla.graphics.Bullet;
 	import fla.hero.DamageFullSpeed;
 	import fla.hero.Dead;
 	import fla.hero.JumpFullSpeed;
 	import fla.hero.RunFullSpeed;
+	import fla.hero.RunSlow;
 	import fla.hero.actionOneFullSpeed;
 	import fla.hero.actionTwoFullSpeed;
-
-	import global.Colors;
-	import global.GlobalData;
-	import global.Utils;
-
-	import com.greensock.*;
-	import com.greensock.easing.*;
-
+	import fla.hero.actionTwoSlow;
+	
+	import flash.display.DisplayObject;
 	import flash.display.MovieClip;
 	import flash.display.Sprite;
 	import flash.geom.Point;
 	import flash.utils.*;
+	
+	import global.Colors;
+	import global.GlobalData;
+	import global.Utils;
 
 	/**
 	 * @author joepsuijkerbuijk
@@ -50,6 +58,7 @@ package components {
 
 		private var _heroGraphicArray : Array = [];
 		private var _currAnimation:CitrusSprite;
+		private var _collisionAngle:Number;
 		
 		public function RunnerHero(name : String, params : Object = null) {
 					
@@ -152,7 +161,7 @@ package components {
 				
 			var velocity:b2Vec2 = _body.GetLinearVelocity();
 			
-			notice(x + _ce.state.view.camera.camPos.x);
+			if (x + _ce.state.view.camera.camPos.x <= 70) handleGamerOver();
 			
 			friction = _friction;
 			//velocity.Add(getSlopeBasedMoveAngle());
@@ -187,9 +196,9 @@ package components {
 				}
 				
 				if (_ce.input.justDid("shoot")){
-					var bullet:Missile;
-					bullet = new Missile("bullet"+bulletcounter, {x:x + width, y:y, width:15, height:15, speed:15, angle:0, view: ""});
-					bulletcounter++;
+					var bullet:ExtendedMissile;
+					bullet = new ExtendedMissile("bullet"+bulletcounter, {x:x + width, y:y - 60, width:15, height:15, speed:15, angle:0, view: fla.graphics.Bullet});
+					bulletcounter++
 					_ce.state.add(bullet);
 				}
 				
@@ -251,25 +260,29 @@ package components {
 		}
 		
 		private function drawSlope():void {
-			var slope:Sprite = new Sprite();
-			slope.graphics.clear();
-			slope.graphics.beginFill(Colors.BLACK);
-			slope.graphics.moveTo(0, 0); 
-			slope.graphics.lineTo(150,Utils.RandomIntBetween(-80,-130)); 
-			slope.graphics.lineTo(150,100); 
-			slope.graphics.lineTo(150,0); 
-			slope.graphics.lineTo(0,0); 
-			slope.graphics.endFill();
+//			var slope:Sprite = new Sprite();
+//			slope.graphics.clear();
+//			slope.graphics.beginFill(Colors.BLACK);
+//			slope.graphics.moveTo(0, 0); 
+//			slope.graphics.lineTo(150,Utils.RandomIntBetween(-80,-130)); 
+//			slope.graphics.lineTo(150,100); 
+//			slope.graphics.lineTo(150,0); 
+//			slope.graphics.lineTo(0,0); 
+//			slope.graphics.endFill();
 			
-			//this.view = slope
+			var slope : AllSlopes = new fla.graphics.AllSlopes();
+			var random : int = Math.random() * (slope.totalFrames)+1;
+			slope.gotoAndStop(random);			
+
 			slope.rotation = 30;	
 			
 			slope.x = x - 35; 
-			slope.y = y + 50;
+			slope.y = y + 25;
 			
 			_gameData.hillView.addChild(slope);
 			
-			TweenMax.to(slope, .3 ,{y : slope.y - 10, rotation : 0, ease:Bounce.easeOut});	
+			TweenMax.to(slope, .3 ,{y : slope.y - 10, rotation : 0, ease:Bounce.easeOut});
+			TweenMax.to(slope, .3 ,{delay: .6, y : slope.y + 60, rotation : 60, ease:Bounce.easeOut});
 		}		
 		
 		
@@ -280,7 +293,7 @@ package components {
 			//Collision angle if we don't touch a Sensor.
 			if (contact.GetManifold().m_localPoint && !(collider is Sensor)) //The normal property doesn't come through all the time. I think doesn't come through against sensors.
 			{			
-				var collisionAngle:Number = (((new MathVector(contact.normal.x, contact.normal.y).angle) * 180 / Math.PI) + 360) % 360;// 0º <-> 360º
+				_collisionAngle = (((new MathVector(contact.normal.x, contact.normal.y).angle) * 180 / Math.PI) + 360) % 360;// 0º <-> 360º
 				//if ((collisionAngle > 45 && collisionAngle < 135)){
 					_groundContacts.push(collider.body.GetFixtureList());
 					_onGround = true;
@@ -292,5 +305,15 @@ package components {
 		
 		
 		
+		public function handleGamerOver():void {
+			_gameData.gameOver = true;
+			body.SetAwake(false);
+			_ce.state.view.camera.followTarget = false;
+			TweenMax.to(this, 2.5, {y: y + _ce.stage.stageHeight, x:x + 100, onComplete: doPause });
+		}
+		
+		private function doPause() : void {
+			_ce.playing = false;
+		}
 	}
 }

@@ -6,7 +6,7 @@ package {
 	import citrus.objects.platformer.box2d.Crate;
 	import citrus.objects.platformer.box2d.Platform;
 	import citrus.physics.box2d.Box2D;
-
+	
 	import components.Background;
 	import components.ObstacleManager;
 	import components.RectangleSprite;
@@ -24,7 +24,7 @@ package {
 	import flash.display.Sprite;
 	import flash.geom.Point;
 	import flash.geom.Rectangle;
-
+	
 	import global.Colors;
 	import global.GlobalData;
 
@@ -44,10 +44,10 @@ package {
 		
 		private var _mask:Sprite;
 		private var _tfHolder:TextFieldManager;
+		private var _emitter:Emitter;
 		private var _indicator:Crate;
 		private var _fallingRocks:CitrusSprite;
-//		private var _emitter:Emitter;
-
+		
 		public function GameJamGameState() {
 			super();
 		}
