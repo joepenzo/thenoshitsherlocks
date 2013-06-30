@@ -117,7 +117,7 @@ package {
 			_fallingRocks.y = _indicator.y - 75 ;
 			if (_indicator.y >= 600) {
 				_indicator.x = 100;
-				_indicator.y = 0; 
+				_indicator.y = -100; 
 			
 			}
 			

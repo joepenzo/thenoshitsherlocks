@@ -35,7 +35,7 @@ package components
 		
 		override public function update(timeDelta:Number):void {
 			super.update(timeDelta);
-
+return;
 			if (_gameData.heroPos.x % 1000 <= 5) {
 				if( Math.random() <= .5) {
 					_ce.state.add( new Obstacle("tree",  Constants.obstacleLarge, {height: OBSTAClE_HEIGHT, x:_gameData.currentHillX, y:_gameData.currentHillY - OBSTAClE_HEIGHT/2 + 10, view: Tree}) );

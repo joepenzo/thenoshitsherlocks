@@ -37,6 +37,7 @@ package components {
 	public class RunnerHero extends Hero {
 		private const MIN_VELOCITY:Number = 3.5;
 		private const MAX_VELOCITY:Number = 8;
+		private const JUMP_DELAY:int = 750;
 
 		private var bulletcounter:int=0;
 		private var _gameData : GlobalData;
@@ -53,6 +54,8 @@ package components {
 		private var _collisionAngle:Number;
 		private var _topPart:Crate;
 		private var _heroTopPart:Crate;
+		private var _mayJump: Boolean = true;;
+		
 		
 		public function RunnerHero(name : String, params : Object = null) {
 					
@@ -107,7 +110,7 @@ package components {
 			_heroGraphicArray.push(A_DEAD);
 			
 			
-			_heroTopPart = new Crate("HeroTopPart", {x:150, y:0, width :25, height : 60});
+			_heroTopPart = new Crate("HeroTopPart", {x:150, y:0, width :25, height : 50});
 			_ce.state.add(_heroTopPart);
 			_heroTopPart.body.SetFixedRotation(true);
 		}
@@ -169,6 +172,7 @@ package components {
 			}
 			
 			
+			
 			if (controlsEnabled)
 			{
 				var moveKeyPressed:Boolean = false;
@@ -182,26 +186,32 @@ package components {
 					_playerMovingHero = false;
 					_fixture.SetFriction(_friction);
 				}
-
-				if ((_body.GetContactList() != null) && _onGround && _ce.input.justDid("jump", inputChannel)) {
-					if ( _gameData.currentPowerValue >= 1 ) return;
-					drawSlope();
-					_gameData.currentPowerValue--;
-					velocity.x = + jumpHeight/3;
-					velocity.y = -jumpHeight;
-					onJump.dispatch();
-				} else if (_ce.input.isDoing("jump", inputChannel) && !_onGround && velocity.y < 0) {
-					velocity.y -= jumpAcceleration;
-				}
 				
-				if (_ce.input.justDid("shoot") && _gameData.currentPowerValue >= 1){
-					_gameData.currentPowerValue--;
-					var bullet:Missile;
-					bullet = new Missile("bullet"+bulletcounter, {x:x + width, y:y - 60, width:15, height:15, speed:15, angle:0, view: fla.graphics.Bullet});
-					bulletcounter++;
-					_ce.state.add(bullet);
-				}
-				
+				if ( _gameData.currentPowerValue >= 1 ) {
+					
+//					if ((this.body.GetContactList() != null) && _onGround && _ce.input.justDid("jump", inputChannel)) {
+					if (_mayJump && _onGround && _ce.input.justDid("jump", inputChannel)) {
+						_mayJump = false;
+						setTimeout(function():void{
+							_mayJump = true
+						}, JUMP_DELAY); 
+						drawSlope();
+						_gameData.currentPowerValue--;
+						velocity.x = + jumpHeight/3;
+						velocity.y = -jumpHeight;
+						onJump.dispatch();
+					} else if (_ce.input.isDoing("jump", inputChannel) && !_onGround && velocity.y < 0) {
+						velocity.y -= jumpAcceleration;
+					}
+					
+					if (_ce.input.justDid("shoot") && _gameData.currentPowerValue >= 1){
+						_gameData.currentPowerValue--;
+						var bullet:Missile;
+						bullet = new Missile("bullet"+bulletcounter, {x:x + width, y:y - 60, width:15, height:15, speed:15, angle:0, view: fla.graphics.Bullet});
+						bulletcounter++;
+						_ce.state.add(bullet);
+					}
+				}				
 
 			}
 			
