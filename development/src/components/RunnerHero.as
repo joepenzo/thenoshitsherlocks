@@ -29,6 +29,7 @@ package components {
 	import flash.display.MovieClip;
 	import flash.geom.Point;
 	import flash.utils.*;
+	import citrus.objects.platformer.box2d.Crate;
 
 	/**
 	 * @author joepsuijkerbuijk
@@ -50,6 +51,8 @@ package components {
 		private var _heroGraphicArray : Array = [];
 		private var _currAnimation:CitrusSprite;
 		private var _collisionAngle:Number;
+		private var _topPart:Crate;
+		private var _heroTopPart:Crate;
 		
 		public function RunnerHero(name : String, params : Object = null) {
 					
@@ -59,8 +62,6 @@ package components {
 			_friction = 40;
 			maxVelocity = MAX_VELOCITY;
 			hurtDuration = 600;
-			
-			
 			
 			
 			var sprite : MovieClip = new RunFullSpeed();
@@ -105,9 +106,13 @@ package components {
 			_ce.state.add(A_DEAD);
 			_heroGraphicArray.push(A_DEAD);
 			
+			
+			_heroTopPart = new Crate("HeroTopPart", {x:150, y:0, width :25, height : 60});
+			_ce.state.add(_heroTopPart);
+			_heroTopPart.body.SetFixedRotation(true);
 		}
 		
-		
+
 		override public function addPhysics():void {
 			super.addPhysics();
 
@@ -178,9 +183,10 @@ package components {
 					_fixture.SetFriction(_friction);
 				}
 
-				if ((_body.GetContactList() != null) && _onGround && _ce.input.justDid("jump", inputChannel) &&  _gameData.currentPowerValue >= 1) {
-					_gameData.currentPowerValue--;
+				if ((_body.GetContactList() != null) && _onGround && _ce.input.justDid("jump", inputChannel)) {
+					if ( _gameData.currentPowerValue >= 1 ) return;
 					drawSlope();
+					_gameData.currentPowerValue--;
 					velocity.x = + jumpHeight/3;
 					velocity.y = -jumpHeight;
 					onJump.dispatch();
@@ -216,8 +222,14 @@ package components {
 			
 			updateGraphicPostition();
 			updateAnimation();
+			updateTopPart();
 			_gameData.heroPos = new Point(x,y);
 			
+		}
+		
+		private function updateTopPart():void {
+			_heroTopPart.x = x;
+			_heroTopPart.y = y - 50;
 		}
 		
 		private function updateGraphicPostition():void {

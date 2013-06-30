@@ -1,11 +1,15 @@
 package components {
-	import global.GlobalData;
-	import global.Constants;
-	import citrus.objects.platformer.box2d.Coin;
 	import Box2D.Dynamics.Contacts.b2Contact;
+	
+	import citrus.objects.Box2DPhysicsObject;
+	import citrus.objects.platformer.box2d.Coin;
 	import citrus.physics.box2d.Box2DUtils;
 	import citrus.physics.box2d.IBox2DPhysicsObject;
 	import citrus.utils.AGameData;
+	
+	import global.Constants;
+	import global.GlobalData;
+	import citrus.objects.platformer.box2d.Crate;
 
 	/**
 	 * @author joepsuijkerbuijk
@@ -25,8 +29,8 @@ package components {
 			super.handleBeginContact(contact);
 
 			var collider:IBox2DPhysicsObject = Box2DUtils.CollisionGetOther(this, contact);
-
-			if (_collectorClass && collider is _collectorClass) {
+			
+			if (collider is _collectorClass ||  collider is Crate ) {
 				addPower(Constants.ADD_POWER_VAL);
 				kill = true;
 			}

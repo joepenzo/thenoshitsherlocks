@@ -72,6 +72,7 @@ package {
 			_fallingRocks = new CitrusSprite("rocks", {x:-1000, y:0, view: fla.graphics.RocksFalling});
 			add(_fallingRocks);
 			
+			
 			_hero = new RunnerHero("Hero", {x:150, y:-100, radius:.5, jumpHeight:15});//_hero = new RunnerHero("Hero", {x:0, y:-100, radius:.5, jumpHeight:15, view : HeroGraphics});
 			add(_hero);
 			_gameData.currentPowerValue = Constants.MAX_POWER;
@@ -100,7 +101,7 @@ package {
 			_mask.x = 55;
 			_hillsView.mask = _mask;
 			
-			view.camera.setUp(_hero, new Point(stage.stageWidth / 2 - _hero.width, stage.stageHeight / 2));
+			view.camera.setUp(_hero, new Point(stage.stageWidth / 2 - _hero.width, stage.stageHeight/2 + 100));
 			notice("State initialized");
 			
 			
@@ -118,6 +119,11 @@ package {
 			_indicator.x = -view.camera.camPos.x + 80;
 			_fallingRocks.x = -view.camera.camPos.x + 170;
 			_fallingRocks.y = _indicator.y - 75 ;
+			if (_indicator.y >= 600) {
+				_indicator.x = 100;
+				_indicator.y = 0; 
+			
+			}
 			
 			if (_gameData.gameOver && !_gameOverHandled) handleGameOver();
 		}

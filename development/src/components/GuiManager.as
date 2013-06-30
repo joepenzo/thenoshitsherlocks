@@ -32,7 +32,7 @@ package components
 		
 		public function updatePower(val : Number):void {
 			var percentage : Number = val/Constants.MAX_POWER;
-			debug(percentage);
+			if (percentage >= 1) percentage = 1;
 			_powerBar.scaleX = percentage;
 		}
 	}
