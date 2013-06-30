@@ -13,6 +13,8 @@ package components {
 	import citrus.physics.box2d.IBox2DPhysicsObject;
 	import Box2D.Dynamics.Contacts.b2Contact;
 	import citrus.objects.platformer.box2d.Sensor;
+	import flash.display.Sprite;
+	import citrus.objects.CitrusSprite;
 
 	/**
 	 * @author joepsuijkerbuijk
@@ -114,7 +116,8 @@ package components {
 		}
 		
 		private function drawSlope():void {
-			
+			var slope:CitrusSprite = new SlopeSprite("slope", {x : x - 25, y: y + 40});
+			_ce.state.add(slope);
 		}		
 		
 		override public function handleBeginContact(contact:b2Contact):void {
