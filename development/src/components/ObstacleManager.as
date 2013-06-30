@@ -7,6 +7,8 @@ package components
 	import components.RunnerHero;
 	import components.hill.HillManager;
 	
+	import fla.graphics.Tree;
+	
 	import flash.display.Sprite;
 	
 	import global.Constants;
@@ -15,7 +17,9 @@ package components
 	public class ObstacleManager extends CitrusObject
 	{
 		private const OBSTAClE_HEIGHT: int = 150;
-		private const CLIFF_SIZE: int = 20;
+//		private const CLIFF_WIDTH: int = 20;
+		private const CLIFF_WIDTH: int = 150;
+		private const CLIFF_HEIGHT: int = 20;
 
 		private var _gameData:GlobalData;
 		
@@ -32,12 +36,12 @@ package components
 
 			if (_gameData.heroPos.x % 1000 <= 5) {
 				if( Math.random() <= .5) {
-					_ce.state.add( new Obstacle("tree",  Constants.obstacleLarge, {height: OBSTAClE_HEIGHT, x:_gameData.currentHillX, y:_gameData.currentHillY - OBSTAClE_HEIGHT/2 + 10}) );
+					_ce.state.add( new Obstacle("tree",  Constants.obstacleLarge, {height: OBSTAClE_HEIGHT, x:_gameData.currentHillX, y:_gameData.currentHillY - OBSTAClE_HEIGHT/2 + 10, view: Tree}) );
 				} else {
 					var hill : HillManager =  _ce.state.getObjectByName("Hills") as HillManager;
 					hill.createGap();
 				
-					var cliff : Cliff=  new Cliff( "cliff", {height: CLIFF_SIZE, width: CLIFF_SIZE, x:_gameData.currentHillX + 100 + CLIFF_SIZE/2, y:_gameData.nextHillY} );
+					var cliff : Cliff=  new Cliff( "cliff", {height: CLIFF_HEIGHT, width: CLIFF_WIDTH, x:_gameData.currentHillX + 100 + CLIFF_WIDTH/2, y:_gameData.nextHillY} );
 					_ce.state.add(cliff);
 				}
 				

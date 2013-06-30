@@ -1,6 +1,7 @@
 package global {
 	import citrus.utils.AGameData;
 	import flash.geom.Point;
+	import flash.display.Sprite;
 
 	/**
 	 * @author joepsuijkerbuijk
@@ -15,11 +16,22 @@ package global {
 		private var _nextHillY : Number = 0;
 		private var _nextHillX:Number = 0;
 		private var _HeroPos:Point = new Point(0,0);
+		private var _slopeView : Sprite;
 		
 		private var _gameOver:Boolean = false;
 		
 		public function GlobalData() {
 			super();
+		}
+
+		public function get hillView():Sprite
+		{
+			return _slopeView;
+		}
+
+		public function set hillView(value:Sprite):void
+		{
+			_slopeView = value;
 		}
 
 		public function get gameOver():Boolean

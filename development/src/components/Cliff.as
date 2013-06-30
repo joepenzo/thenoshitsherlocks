@@ -46,7 +46,7 @@ package components {
 
 				hero.body.SetAwake(false);
 				_ce.state.view.camera.followTarget = false;
-				TweenMax.to(hero, 2, {y: hero.y + _ce.stage.stageHeight, x:hero.x + 50, onComplete: doPause });
+				TweenMax.to(hero, 2.5, {y: hero.y + _ce.stage.stageHeight, x:hero.x + 100, onComplete: doPause });
 			}
 		}
 		
