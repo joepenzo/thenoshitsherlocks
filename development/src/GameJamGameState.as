@@ -1,6 +1,9 @@
 package {
 	import citrus.core.State;
 	import citrus.input.controllers.Keyboard;
+	import citrus.objects.CitrusSprite;
+	import citrus.objects.common.Emitter;
+	import citrus.objects.platformer.box2d.Crate;
 	import citrus.objects.platformer.box2d.Platform;
 	import citrus.physics.box2d.Box2D;
 
@@ -11,12 +14,19 @@ package {
 	import components.TextFieldManager;
 	import components.hill.HillManager;
 	import components.hill.HillsView;
+	
+	import fla.graphics.HillMask;
+	import fla.graphics.Particle;
+	import fla.graphics.RocksFalling;
+	import fla.graphics.Tree;
+	import fla.hero.RunFullSpeed;
+	
+	import flash.display.Sprite;
+	import flash.geom.Point;
+	import flash.geom.Rectangle;
 
 	import global.Colors;
 	import global.GlobalData;
-
-	import flash.display.Sprite;
-	import flash.geom.Point;
 
 	/**
 	 * @author joepsuijkerbuijk
@@ -34,8 +44,10 @@ package {
 		
 		private var _mask:Sprite;
 		private var _tfHolder:TextFieldManager;
+		private var _indicator:Crate;
+		private var _fallingRocks:CitrusSprite;
 //		private var _emitter:Emitter;
-		
+
 		public function GameJamGameState() {
 			super();
 		}
@@ -53,6 +65,12 @@ package {
 			var box2D:Box2D = new Box2D("box2D");
 			box2D.visible = true;
 			add(box2D);
+			
+			_indicator = new Crate("Indicator", {x: 100, y: 0 ,radius:20});
+			add(_indicator);
+			
+			_fallingRocks = new CitrusSprite("rocks", {x:-1000, y:0, view: fla.graphics.RocksFalling});
+			add(_fallingRocks);
 			
 			_hero = new RunnerHero("Hero", {x:150, y:-100, radius:.5, jumpHeight:15});//_hero = new RunnerHero("Hero", {x:0, y:-100, radius:.5, jumpHeight:15, view : HeroGraphics});
 			add(_hero);
@@ -87,15 +105,18 @@ package {
 			_obstaclesManager = new ObstacleManager("obstacleManager", {});
 			add(_obstaclesManager);	
 			
-			_mask = new Sprite();
+//			_mask = new Sprite();
+//			addChild(_mask);
+//			_mask.graphics.clear();
+//			_mask.graphics.beginFill(Colors.WHITE);
+//			_mask.graphics.drawRect( 60,0 ,stage.stageWidth,stage.stageHeight);
+//			_mask.graphics.endFill();
+			_mask = new fla.graphics.HillMask();
 			addChild(_mask);
-			_mask.graphics.clear();
-			_mask.graphics.beginFill(Colors.WHITE);
-			_mask.graphics.drawRect( 60,0 ,stage.stageWidth,stage.stageHeight);
-			_mask.graphics.endFill();
+			_mask.x = 55;
 			_hillsView.mask = _mask;
 			
-			view.camera.setUp(_hero, new Point(stage.stageWidth / 2 - 200, stage.stageHeight / 2));
+			view.camera.setUp(_hero, new Point(stage.stageWidth / 2 - _hero.width, stage.stageHeight / 2));
 			//view.camera.offset = new Point(300,stage.stageHeight / 2);			
 			notice("State initialized");
 			
@@ -108,6 +129,10 @@ package {
 			_gameData.score++;
 			
 			_tfHolder.updateScore(_gameData.score);
+			
+			_indicator.x = -view.camera.camPos.x + 80;
+			_fallingRocks.x = -view.camera.camPos.x + 170;
+			_fallingRocks.y = _indicator.y - 75 ;
 			
 //			_emitter.x = -view.camera.camPos.x + 60 + 300;
 //			_emitter.y = -view.camera.camPos.y + 100;
