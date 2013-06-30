@@ -13,5 +13,13 @@ package global {
 		    return array[idx];
 		}
 		
+		
+		public static function getLength(o:Object):uint {
+			var len:uint = 0;
+			for (var item:* in o)
+				if (item != "mx_internal_uid")
+					len++;
+			return len;
+		}
 	}
 }
