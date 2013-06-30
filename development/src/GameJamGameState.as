@@ -7,17 +7,29 @@ package {
 
 	import components.Background;
 	import components.ObstacleManager;
-	import components.Rectangle;
+	import components.RectangleSprite;
 	import components.RunnerHero;
 	import components.TextFieldManager;
 	import components.hill.HillManager;
 	import components.hill.HillsView;
+<<<<<<< HEAD
 
 	import global.Colors;
 	import global.GlobalData;
 
 	import flash.display.Sprite;
 	import flash.geom.Point;
+=======
+	
+	import fla.hero.RunFullSpeed;
+	
+	import flash.display.Sprite;
+	import flash.geom.Point;
+	import flash.geom.Rectangle;
+	
+	import global.Colors;
+	import global.GlobalData;
+>>>>>>> b15f1dd3416877772e7cad5de98d92352c66fd0b
 
 	/**
 	 * @author joepsuijkerbuijk
@@ -62,7 +74,7 @@ package {
 							
 			//_hero.view = New 
 			
-			add(new Platform ("Start", {y : stage.stageHeight, x:-stage.stageWidth/2, height : stage.stageHeight, width: stage.stageWidth, view: new Rectangle(stage.stageWidth, stage.stageHeight, Colors.BLACK)}));
+			add(new Platform ("Start", {y : stage.stageHeight, x:-stage.stageWidth/2, height : stage.stageHeight, width: stage.stageWidth, view: new RectangleSprite(stage.stageWidth, stage.stageHeight, Colors.BLACK)}));
 			_hillsView = new HillsView();
 			_hills = new HillManager("Hills",{hillStartY : stage.stageHeight/2, rider:_hero, sliceWidth:100, roundFactor:5, sliceHeight:stage.stageHeight, widthHills:stage.stageWidth, registration:"topLeft", view:_hillsView});
 			add(_hills);
@@ -81,7 +93,13 @@ package {
 			_mask.graphics.drawRect( 100,0 ,stage.stageWidth,stage.stageHeight);
 			_mask.graphics.endFill();
 			_hillsView.mask = _mask;
+<<<<<<< HEAD
 			 
+=======
+			
+			view.camera.setUp(_hero, new Point(stage.stageWidth / 2, stage.stageHeight / 2));
+			//view.camera.offset = new Point(300,stage.stageHeight / 2);			
+>>>>>>> b15f1dd3416877772e7cad5de98d92352c66fd0b
 			notice("State initialized");
 		}
 		

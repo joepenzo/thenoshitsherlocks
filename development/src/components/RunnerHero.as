@@ -144,6 +144,8 @@ package components {
 			_hurtTimeoutID = setTimeout(endHurtState, hurtDuration);
 			onTakeDamage.dispatch();
 			
+			TweenMax.to(_ce.state.view.camera.offset, 2, {x : _ce.state.view.camera.offset.x - 200} );
+			
 			//Makes sure that the hero is not frictionless while his control is disabled
 			if (_playerMovingHero)
 			{
@@ -156,10 +158,11 @@ package components {
 				
 			var velocity:b2Vec2 = _body.GetLinearVelocity();
 			
+			notice(x + _ce.state.view.camera.camPos.x);
+			
 			friction = _friction;
 			//velocity.Add(getSlopeBasedMoveAngle());
 			if (_hurt) {
-				error("hurt");
 				velocity.Add(new b2Vec2(-35,0));
 			} else {
 				velocity.Add(new b2Vec2(getSlopeBasedMoveAngle().x/15, getSlopeBasedMoveAngle().y/10));
