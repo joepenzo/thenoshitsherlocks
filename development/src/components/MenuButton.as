@@ -14,7 +14,7 @@ package components {
 			_title = title;
 			
 			graphics.clear();
-			graphics.beginFill(Colors.BACKGROUND_RED);
+			graphics.beginFill(Colors.BLACK);
 			graphics.drawRect(params.x, params.y, params.width, params.height);
 				
 			addEventListener(MouseEvent.ROLL_OVER,overButton);

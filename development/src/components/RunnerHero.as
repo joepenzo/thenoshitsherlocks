@@ -1,13 +1,11 @@
 package components {
+	import citrus.objects.platformer.box2d.Missile;
 	import Box2D.Common.Math.b2Vec2;
 	import Box2D.Dynamics.Contacts.b2Contact;
-	
-	import citrus.core.CitrusObject;
-	import citrus.input.controllers.Keyboard;
+
 	import citrus.math.MathVector;
 	import citrus.objects.CitrusSprite;
 	import citrus.objects.platformer.box2d.Hero;
-	import citrus.objects.platformer.box2d.Missile;
 	import citrus.objects.platformer.box2d.Sensor;
 	import citrus.physics.PhysicsCollisionCategories;
 	import citrus.physics.box2d.Box2DShapeMaker;
@@ -20,24 +18,25 @@ package components {
 	
 	import fla.graphics.AllSlopes;
 	import fla.graphics.Bullet;
+
 	import fla.hero.DamageFullSpeed;
 	import fla.hero.Dead;
 	import fla.hero.JumpFullSpeed;
 	import fla.hero.RunFullSpeed;
-	import fla.hero.RunSlow;
 	import fla.hero.actionOneFullSpeed;
 	import fla.hero.actionTwoFullSpeed;
-	import fla.hero.actionTwoSlow;
-	
-	import flash.display.DisplayObject;
+
+	import global.Colors;
+	import global.GlobalData;
+	import global.Utils;
+
+	import com.greensock.*;
+	import com.greensock.easing.*;
+
 	import flash.display.MovieClip;
 	import flash.display.Sprite;
 	import flash.geom.Point;
 	import flash.utils.*;
-	
-	import global.Colors;
-	import global.GlobalData;
-	import global.Utils;
 
 	/**
 	 * @author joepsuijkerbuijk
@@ -161,7 +160,7 @@ package components {
 				
 			var velocity:b2Vec2 = _body.GetLinearVelocity();
 			
-			if (x + _ce.state.view.camera.camPos.x <= 70) handleGamerOver();
+			notice(x + _ce.state.view.camera.camPos.x);
 			
 			friction = _friction;
 			//velocity.Add(getSlopeBasedMoveAngle());
@@ -305,15 +304,5 @@ package components {
 		
 		
 		
-		public function handleGamerOver():void {
-			_gameData.gameOver = true;
-			body.SetAwake(false);
-			_ce.state.view.camera.followTarget = false;
-			TweenMax.to(this, 2.5, {y: y + _ce.stage.stageHeight, x:x + 100, onComplete: doPause });
-		}
-		
-		private function doPause() : void {
-			_ce.playing = false;
-		}
 	}
 }
