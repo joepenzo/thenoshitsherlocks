@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<XML>
+    <userScores>
+        <userScore>
+            <scoreDate>02/01/2012</scoreDate>
+            <scoreTime>7:01pm</scoreTime>
+            <scoreTotalTime>10000</scoreTotalTime>
+            <scoreValue>22</scoreValue>
+            <scoreName>John Doe</scoreName>
+        </userScore>
+        <userScore>
+            <scoreDate>02/01/2012</scoreDate>
+            <scoreTime>7:01pm</scoreTime>
+            <scoreTotalTime>10000</scoreTotalTime>
+            <scoreValue>22</scoreValue>
+            <scoreName>John Doe</scoreName>
+        </userScore>
+    </userScores>
+</XML>

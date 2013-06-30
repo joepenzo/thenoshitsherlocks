@@ -10,6 +10,9 @@ package components {
 	 * @author joepsuijkerbuijk
 	 */
 	public class Collectable extends Coin {
+		
+		//@todo Check REWARD class of citrus engine box2d for PowerUps (like mario mushrooms or stars)
+		
 		private var _gameData : GlobalData;
 		private var _type : String;
 		//private var _value : Number;
