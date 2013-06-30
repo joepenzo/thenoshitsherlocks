@@ -15,4 +15,5 @@
     <AS3Classpath generateProblems="false" sdkBased="false" type="lib" useAsSharedCode="false">libs/CEV3-1-7-ALL.swc</AS3Classpath>
     <AS3Classpath generateProblems="false" sdkBased="false" type="lib" useAsSharedCode="false">assets/bg.swc</AS3Classpath>
     <AS3Classpath generateProblems="false" sdkBased="false" type="lib" useAsSharedCode="false">assets/graphics.swc</AS3Classpath>
+    <AS3Classpath generateProblems="false" sdkBased="false" type="lib" useAsSharedCode="false">assets/hero.swc</AS3Classpath>
 </AS3Classpath>
