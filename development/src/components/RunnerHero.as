@@ -30,6 +30,7 @@ package components {
 	import flash.geom.Point;
 	import flash.utils.*;
 	import citrus.objects.platformer.box2d.Crate;
+	import citrus.core.IState;
 
 	/**
 	 * @author joepsuijkerbuijk
@@ -55,6 +56,7 @@ package components {
 		private var _topPart:Crate;
 		private var _heroTopPart:Crate;
 		private var _mayJump: Boolean = true;;
+		private var _gameState:GameJamGameState;
 		
 		
 		public function RunnerHero(name : String, params : Object = null) {
@@ -66,6 +68,7 @@ package components {
 			maxVelocity = MAX_VELOCITY;
 			hurtDuration = 600;
 			
+			_gameState = _ce.state as GameJamGameState;
 			
 			var sprite : MovieClip = new RunFullSpeed();
 			sprite.scaleX = sprite.scaleY = .3;
@@ -161,7 +164,11 @@ package components {
 				
 			var velocity:b2Vec2 = _body.GetLinearVelocity();
 			
-			if (x + _ce.state.view.camera.camPos.x <= 70) handleGamerOver();
+			if (x + _ce.state.view.camera.camPos.x <= 70) {
+				body.SetAwake(false);
+				TweenMax.to(this, 2.5, {y: y + _ce.stage.stageHeight, x:x + 100}); 
+				_gameState.handleGameOverState();
+			}
 			
 			friction = _friction;
 			//velocity.Add(getSlopeBasedMoveAngle());
@@ -321,17 +328,6 @@ package components {
 		
 		
 		
-		public function handleGamerOver():void {
-			_gameData.gameOver = true;
-			body.SetAwake(false);
-			//TODO: SLOW DEZE SHIT DOWN MAN..
-			//TODO: Zet background uit..
-			_ce.state.view.camera.followTarget = false;
-			TweenMax.to(this, 2.5, {y: y + _ce.stage.stageHeight, x:x + 100, onComplete: doPause });
-		}
 		
-		private function doPause() : void {
-			_ce.playing = false;
-		}
 	}
 }

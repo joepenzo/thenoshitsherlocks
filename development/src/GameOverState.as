@@ -2,20 +2,20 @@ package {
 	import flash.text.TextFormatAlign;
 	import flash.text.TextFormat;
 	import global.GlobalData;
-	import components.TextFieldManager;
 	import flash.events.MouseEvent;
 	import components.MenuButton;
 	import citrus.objects.CitrusSprite;
 	import fla.menus.GameOver;
 	import global.Sizes;
 	import citrus.core.State;
+	import components.GuiManager;
 	
 	/**
 	 * @author ezrabotter
 	 */
 	public class GameOverState extends State {
 		private var _btnTryAgain:MenuButton;
-		private var _tfHolder:TextFieldManager;
+		private var _tfHolder:GuiManager;
 		private var _gameOver:GameOver;
 		private var _gameData : GlobalData;
 		

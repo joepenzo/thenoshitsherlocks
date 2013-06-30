@@ -18,7 +18,9 @@ package components {
 	
 	import global.Constants;
 	import global.GlobalData;
-
+	import citrus.core.IState;
+	import flash.utils.setTimeout;
+	
 	/**
 	 * @author ezrabotter
 	 */
@@ -26,10 +28,12 @@ package components {
 		
 		private var _hero:RunnerHero;
 		private var _gameData:GlobalData;
+		private var _gameState:GameJamGameState;
 		
 		public function Cliff(name:String,params:Object) {
 			super(name, params);
 			_gameData = _ce.gameData as GlobalData;
+			_gameState = _ce.state as GameJamGameState;
 			updateCallEnabled = true;
 			_hero = _ce.state.getObjectByName("Hero") as RunnerHero;
 
@@ -41,7 +45,15 @@ package components {
 
 			if (collider is RunnerHero) {
 				var hero : RunnerHero = collider as RunnerHero;
-				hero.handleGamerOver();
+				
+				hero.body.SetAwake(false);
+				_ce.state.view.camera.target = "";
+				setTimeout(function():void{
+					_gameState.handleGameOverState();
+					hero.updateCallEnabled = false;
+				}, 800); //4000
+				TweenMax.to(hero, 2.5, {y: y + _ce.stage.stageHeight, x:x + 100}); 
+				
 			}
 		}
 		

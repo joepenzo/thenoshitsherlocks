@@ -35,7 +35,7 @@ package {
 		private var _hillsView : HillsView;
 		private var _hills:HillManager;
 		private var _obstaclesManager:ObstacleManager;
-		public var _background:Background;
+		private var _background:Background;
 
 		private var _gameOverHandled:Boolean = false;
 		
@@ -48,6 +48,16 @@ package {
 			super();
 		}
 		
+		public function get background():Background
+		{
+			return _background;
+		}
+
+		public function set background(value:Background):void
+		{
+			_background = value;
+		}
+
 		override public function initialize():void {
 			super.initialize();
 			_gameData = _ce.gameData as GlobalData;
@@ -59,7 +69,7 @@ package {
 			_ce.input.keyboard.addKeyAction("shoot", Keyboard.CTRL);
 
 			var box2D:Box2D = new Box2D("box2D");
-			box2D.visible = true;
+			//box2D.visible = true;
 			add(box2D);
 			
 			_indicator = new Crate("Indicator", {x: 100, y: 0 ,radius:20});
@@ -121,22 +131,21 @@ package {
 			
 			}
 			
-			if (_gameData.gameOver && !_gameOverHandled) handleGameOver();
+			if (_gameData.gameOver && !_gameOverHandled) handleGameOverState();
 		}
 		
-		private function handleGameOver():void {
+		
+		public function handleGameOverState():void {
 			_gameOverHandled = true;
-			fatal("GAMEOVER");
+			fatal("GAMEOVER dikke g");
 			//TODO: timeout ofzo, gaat tering snel hier..
 			
 			var bg:Background = new Background("Game");
 			bg.RemoveBg();
 			
-			//_ce.state = new GameOverState();
-			_tfHolder.visible = false;			
-		}		
-
-		
-		
+			_ce.state = new GameOverState();
+			_tfHolder.visible = false;	
+			
+		}
 	}
 }
