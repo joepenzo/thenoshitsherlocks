@@ -13,9 +13,16 @@ package components {
 		public function MenuButton(title:String,params:Object) {
 			_title = title;
 			
-			graphics.clear();
-			graphics.beginFill(Colors.BACKGROUND_RED);
-			graphics.drawRect(params.x, params.y, params.width, params.height);
+			switch(_title) {
+				case "tryAgain":
+					graphics.clear();
+					graphics.beginFill(Colors.BACKGROUND_RED,0);
+					graphics.drawRect(params.x, params.y, params.width, params.height);						break;
+				default:
+					graphics.clear();
+					graphics.beginFill(Colors.BACKGROUND_RED,0);
+					graphics.drawRect(params.x, params.y, params.width, params.height);	
+			}
 				
 			addEventListener(MouseEvent.ROLL_OVER,overButton);
 			addEventListener(MouseEvent.ROLL_OUT,outClip);	

@@ -24,7 +24,7 @@ package components {
 			switch(name) {
 				case "Game":
 					this.graphics.clear();
-					this.graphics.beginFill(Colors.BACKGROUND_RED);
+					this.graphics.beginFill(Colors.BACKGROUND_BLUE);
 					this.graphics.drawRect(0, 0, Sizes.gameWidth, Sizes.gameHeight);			
 					setInterval(ChangeColor,_backgroundTimout);
 					
@@ -36,9 +36,7 @@ package components {
 					_bg.x = 0;
 					_bg.alpha = 0.2;
 					this.addChildAt(_bg,0);
-					
-					//var parallaxBg:parallaxBackground = new parallaxBackground();
-					//stage.addChild(parallaxBg);
+				
 					break;
 				case "Menu":
 					this.graphics.clear();

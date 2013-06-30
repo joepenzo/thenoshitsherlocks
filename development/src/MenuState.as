@@ -1,5 +1,8 @@
 package {
+	import flash.utils.setTimeout;
+	import fla.menus.intro;
 	import flash.display.DisplayObject;
+
 	import citrus.core.CitrusObject;
 	import global.Sizes;
 	import global.GlobalData;
@@ -7,6 +10,8 @@ package {
 	import components.MenuButton;
 	import flash.events.MouseEvent;
 	import components.Background;
+	
+	import fla.menus.MenuScreen;
 	import citrus.core.State;
 
 	/**
@@ -15,6 +20,8 @@ package {
 	public class MenuState extends State {
 		private var _background : Background;
 		private var _buttons : Array;
+		private var _menuScreen : fla.menus.MenuScreen;
+		private var _intro : fla.menus.intro;
 		
 		public function MenuState() {		
 			//@todo show menu & buttons	
@@ -29,9 +36,11 @@ package {
 			super.initialize();
 
 			//_ce.stage.addChildAt(_background, 0);
-			add(new CitrusSprite("bg", {view: new Background("Menu"),x:0,y:0,width:Sizes.gameWidth,height:Sizes.gameHeight}));			
+			_menuScreen = new MenuScreen();
 			
-			var _startBtn:MenuButton = new MenuButton("Start", {x:0,y:0,width:200,height:40});
+			add(new CitrusSprite("bg", {view: _menuScreen,x:0,y:0,width:Sizes.gameWidth,height:Sizes.gameHeight}));			
+			
+			var _startBtn:MenuButton = new MenuButton("Start", {x:410,y:240,width:150,height:90});
 			_startBtn.addEventListener(MouseEvent.CLICK, PressButton);
 			
 			_buttons = [_startBtn];
@@ -57,8 +66,15 @@ package {
 					for each (var i : MenuButton in _buttons) {
 						_ce.stage.removeChild(i);				
 					}
-					_ce.state = new GameJamGameState();
-					notice("Button start");
+					
+					_intro = new intro();
+					add(new CitrusSprite("intro", {view: _intro,x:0,y:0,width:Sizes.gameWidth,height:Sizes.gameHeight}));			
+					
+					setTimeout(function():void{
+						_ce.state.destroy();
+						_ce.state = new GameJamGameState();
+					}, 4500);
+					
 					break;
 				case "Instructions":
 					//@todo Instructions

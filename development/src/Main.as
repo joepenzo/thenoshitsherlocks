@@ -21,8 +21,8 @@
 			this.gameData = new GlobalData();
 		//	gameData.dataChanged.add(onDataChanged);
 
-			
 			state = new MenuState();
+			//state = new MenuState();
 			
 			//state = new GameJamGameState();
 

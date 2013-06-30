@@ -6,7 +6,7 @@ package {
 	import citrus.objects.platformer.box2d.Crate;
 	import citrus.objects.platformer.box2d.Platform;
 	import citrus.physics.box2d.Box2D;
-	
+
 	import components.Background;
 	import components.GuiManager;
 	import components.ObstacleManager;
@@ -14,20 +14,16 @@ package {
 	import components.RunnerHero;
 	import components.hill.HillManager;
 	import components.hill.HillsView;
-	
+
 	import fla.graphics.HillMask;
-	import fla.graphics.Particle;
 	import fla.graphics.RocksFalling;
-	import fla.graphics.Tree;
-	import fla.hero.RunFullSpeed;
-	
-	import flash.display.Sprite;
-	import flash.geom.Point;
-	import flash.geom.Rectangle;
-	
+
 	import global.Colors;
 	import global.Constants;
 	import global.GlobalData;
+
+	import flash.display.Sprite;
+	import flash.geom.Point;
 
 	/**
 	 * @author joepsuijkerbuijk
