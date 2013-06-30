@@ -1,24 +1,27 @@
 package {
 	import citrus.core.State;
 	import citrus.input.controllers.Keyboard;
+	import citrus.objects.CitrusSprite;
 	import citrus.objects.platformer.box2d.Platform;
 	import citrus.physics.box2d.Box2D;
 	
 	import components.BackgroundArt;
 	import components.ObstacleManager;
+	import components.Rectangle;
 	import components.RunnerHero;
+	import components.TextFieldManager;
 	import components.hill.HillManager;
 	import components.hill.HillsView;
 	
+	import flash.display.Sprite;
 	import flash.geom.ColorTransform;
 	import flash.geom.Point;
+	import flash.text.TextField;
 	import flash.utils.setInterval;
 	
 	import global.Colors;
 	import global.GlobalData;
 	import global.Utils;
-	import components.Rectangle;
-	import flash.display.Sprite;
 
 	/**
 	 * @author joepsuijkerbuijk
@@ -34,6 +37,7 @@ package {
 		
 		public var _backgroundArt:BackgroundArt;
 		private var _mask:Sprite;
+		private var _tfManager:TextFieldManager;
 		
 		public function GameJamGameState() {
 			super();
@@ -42,6 +46,9 @@ package {
 		override public function initialize():void {
 			super.initialize();
 			_gameData = _ce.gameData as GlobalData;
+
+			_ce.input.keyboard.addKeyAction("shoot", Keyboard.COMMAND);
+			_ce.input.keyboard.addKeyAction("shoot", Keyboard.CTRL);
 			
 			_backgroundArt = new BackgroundArt;
 			_ce.stage.addChildAt(_backgroundArt, 0);
@@ -64,11 +71,9 @@ package {
 			_obstaclesManager = new ObstacleManager("obstacleManager", {});
 			add(_obstaclesManager);
 
-			_ce.input.keyboard.addKeyAction("shoot", Keyboard.COMMAND);
-			_ce.input.keyboard.addKeyAction("shoot", Keyboard.CTRL);
+			add( new CitrusSprite("tfHolder" , {view: new TextFieldManager()}));
 			
 			view.camera.setUp(_hero, new Point(stage.stageWidth / 2, stage.stageHeight / 2));
-			notice("State initialized");
 			
 			_mask = new Sprite();
 			addChild(_mask);
@@ -77,6 +82,8 @@ package {
 			_mask.graphics.drawRect( 100,0 ,stage.stageWidth,stage.stageHeight);
 			_mask.graphics.endFill();
 			_hillsView.mask = _mask;
+			
+			notice("State initialized");
 		}
 		
 		override public function update(timeDelta:Number):void {
