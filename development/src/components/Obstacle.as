@@ -12,6 +12,10 @@ package components {
 	import global.GlobalData;
 	import citrus.objects.platformer.box2d.Sensor;
 	import Box2D.Common.Math.b2Vec2;
+	import nape.geom.Vec2;
+	import citrus.objects.platformer.box2d.Missile;
+
+	import citrus.core.CitrusObject;
 
 	/**
 	 * @author ezrabotter
@@ -21,10 +25,13 @@ package components {
 //		private static var _slowDownTime:int = 1800; //miliseconds
 //		private static var _slowDownSpeed:int = 2;
 		private var _size : String;
+		private var _hero:RunnerHero;
 		
 		public function Obstacle(name:String,size:String,params:Object) {
 			_size = size;
 			super(name, params);
+			updateCallEnabled = true;
+			_hero = _ce.state.getObjectByName("Hero") as RunnerHero;
 		}
 		
 		override public function handleBeginContact(contact:b2Contact):void {
@@ -33,7 +40,18 @@ package components {
 
 			if (collider is RunnerHero) {
 				var hero : RunnerHero = collider as RunnerHero;
+				debug("slowdown");
 				hero.body.SetLinearVelocity( new b2Vec2(hero.body.GetLinearVelocity().x/2, hero.body.GetLinearVelocity().y) );
+			}
+
+			if (collider is Missile) {
+				var missile : Missile = collider as Missile;
+				missile.kill = true;
+				missile.destroy();
+				
+				//body.SetActive(false);
+				kill = true;
+				destroy();
 			}
 		
 			
@@ -49,6 +67,16 @@ package components {
 					break;
 			}
 
+		}
+		
+		
+		override public function update(timeDelta:Number):void {
+			super.update(timeDelta);
+			if (x <= _hero.x - _ce.stage.stageWidth) {
+				kill = true;
+				destroy();
+				updateCallEnabled = false;
+			} 			
 		}
 		
 	}

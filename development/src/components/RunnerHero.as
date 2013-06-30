@@ -7,12 +7,17 @@ package components {
 	
 	import flash.geom.Point;
 	import citrus.physics.box2d.Box2DUtils;
-
+		
+	import citrus.input.controllers.Keyboard;
 	import global.GlobalData;
 	import citrus.math.MathVector;
 	import citrus.physics.box2d.IBox2DPhysicsObject;
 	import Box2D.Dynamics.Contacts.b2Contact;
 	import citrus.objects.platformer.box2d.Sensor;
+	import flash.display.Sprite;
+	import citrus.objects.CitrusSprite;
+	import global.Utils;
+	import citrus.objects.platformer.box2d.Missile;
 
 	/**
 	 * @author joepsuijkerbuijk
@@ -21,6 +26,7 @@ package components {
 		private const MIN_VELOCITY:Number = 3.5;
 		private const MAX_VELOCITY:Number = 8;
 
+		private var bulletcounter:int=0;
 		private var _gameData : GlobalData;
 		
 		public function RunnerHero(name : String, params : Object = null) {
@@ -58,19 +64,18 @@ package components {
 		}
 
 
-		override public function update(timeDelta:Number):void
-		{
+		override public function update(timeDelta:Number):void {
 
 			var velocity:b2Vec2 = _body.GetLinearVelocity();
 			
 			friction = _friction;
 			//velocity.Add(getSlopeBasedMoveAngle());
 			velocity.Add(new b2Vec2(getSlopeBasedMoveAngle().x/15, getSlopeBasedMoveAngle().y/10));
-					
+			
 			if (controlsEnabled)
 			{
 				var moveKeyPressed:Boolean = false;
-
+					
 				//If player just started moving the hero this tick.
 				if (moveKeyPressed && !_playerMovingHero){
 					_playerMovingHero = true;
@@ -81,7 +86,7 @@ package components {
 					_fixture.SetFriction(_friction);
 				}
 
-				if (_onGround && _ce.input.justDid("jump", inputChannel)) {
+				if ((_body.GetContactList() != null) && _onGround && _ce.input.justDid("jump", inputChannel)) {
 					drawSlope();
 					velocity.x = + jumpHeight/3;
 					velocity.y = -jumpHeight;
@@ -89,6 +94,14 @@ package components {
 				} else if (_ce.input.isDoing("jump", inputChannel) && !_onGround && velocity.y < 0) {
 					velocity.y -= jumpAcceleration;
 				}
+				
+				if (_ce.input.justDid("shoot")){
+					var bullet:Missile;
+					bullet = new Missile("bullet"+bulletcounter, {x:x + width, y:y, width:10, height:6, speed:15, angle:0});
+					bulletcounter++
+					_ce.state.add(bullet);
+				}
+				
 
 			}
 			
@@ -114,7 +127,8 @@ package components {
 		}
 		
 		private function drawSlope():void {
-			
+			var slope:CitrusSprite = new SlopeSprite("slope", {x : x - 25, y: y + 40});
+			_ce.state.add(slope);
 		}		
 		
 		override public function handleBeginContact(contact:b2Contact):void {

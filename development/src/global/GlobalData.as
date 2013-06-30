@@ -16,9 +16,20 @@ package global {
 		private var _nextHillX:Number = 0;
 		private var _HeroPos:Point = new Point(0,0);
 		
+		private var _gameOver:Boolean = false;
 		
 		public function GlobalData() {
 			super();
+		}
+
+		public function get gameOver():Boolean
+		{
+			return _gameOver;
+		}
+
+		public function set gameOver(value:Boolean):void
+		{
+			_gameOver = value;
 		}
 
 		public function get nextHillX():Number
