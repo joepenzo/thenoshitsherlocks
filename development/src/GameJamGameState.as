@@ -2,6 +2,7 @@ package {
 	import citrus.core.State;
 	import citrus.input.controllers.Keyboard;
 	import citrus.objects.CitrusSprite;
+	import citrus.objects.common.Emitter;
 	import citrus.objects.platformer.box2d.Platform;
 	import citrus.physics.box2d.Box2D;
 	
@@ -13,6 +14,7 @@ package {
 	import components.hill.HillManager;
 	import components.hill.HillsView;
 	
+	import fla.graphics.Tree;
 	import fla.hero.RunFullSpeed;
 	
 	import flash.display.Sprite;
@@ -21,6 +23,7 @@ package {
 	
 	import global.Colors;
 	import global.GlobalData;
+	import fla.graphics.Particle;
 
 	/**
 	 * @author joepsuijkerbuijk
@@ -38,6 +41,7 @@ package {
 		
 		private var _mask:Sprite;
 		private var _tfHolder:TextFieldManager;
+		private var _emitter:Emitter;
 		
 		public function GameJamGameState() {
 			super();
@@ -57,7 +61,6 @@ package {
 			box2D.visible = true;
 			add(box2D);
 			
-			
 			_hero = new RunnerHero("Hero", {x:150, y:-100, radius:.5, jumpHeight:15});//_hero = new RunnerHero("Hero", {x:0, y:-100, radius:.5, jumpHeight:15, view : HeroGraphics});
 			add(_hero);
 			
@@ -67,6 +70,24 @@ package {
 			_hills = new HillManager("Hills",{hillStartY : stage.stageHeight/2, rider:_hero, sliceWidth:100, roundFactor:5, sliceHeight:stage.stageHeight, widthHills:stage.stageWidth, registration:"topLeft", view:_hillsView});
 			add(_hills);
 
+			
+			_emitter = new Emitter("Emitter") as Emitter;
+			_emitter.graphic = fla.graphics.Particle;
+			_emitter.dampingX = 1.1;
+			_emitter.dampingY = 1.1;
+			_emitter.gravityX = .9;
+			_emitter.gravityY = 4.9;
+			_emitter.minImpulseX = -10;
+			_emitter.maxImpulseX = -5;
+			_emitter.minImpulseY = -8;
+			_emitter.maxImpulseY = 10;
+			_emitter.emitFrequency = 100;
+			_emitter.emitAmount = 2;
+			_emitter.particleLifeSpan = 1000;
+			_emitter.x = 0;
+			_emitter.y = 0;
+			//add(_emitter);
+			
 			_tfHolder = new TextFieldManager();
 			stage.addChild(_tfHolder);
 
@@ -95,12 +116,19 @@ package {
 			
 			_tfHolder.updateScore(_gameData.score);
 			
+			_emitter.x = -view.camera.camPos.x + 60 + 300;
+			_emitter.y = -view.camera.camPos.y + 100;
+			
+			notice("x " +  _emitter.x + "  y " +  _emitter.y); 
 			if (_gameData.gameOver && !_gameOverHandled) handleGameOver();
 		}
 		
 		private function handleGameOver():void {
 			_gameOverHandled = true;
 			fatal("GAMEOVER");
+			//TODO: timeout ofzo, gaat tering snel hier..
+			_ce.state = new MenuState();
+			_tfHolder.visible = false;			
 		}		
 
 		

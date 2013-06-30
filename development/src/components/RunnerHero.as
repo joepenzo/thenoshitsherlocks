@@ -18,6 +18,7 @@ package components {
 	import com.greensock.TweenMax;
 	import com.greensock.easing.*;
 	
+	import fla.graphics.Bullet;
 	import fla.hero.DamageFullSpeed;
 	import fla.hero.Dead;
 	import fla.hero.JumpFullSpeed;
@@ -27,11 +28,11 @@ package components {
 	import fla.hero.actionTwoFullSpeed;
 	import fla.hero.actionTwoSlow;
 	
-	import flash.utils.*;
 	import flash.display.DisplayObject;
 	import flash.display.MovieClip;
 	import flash.display.Sprite;
 	import flash.geom.Point;
+	import flash.utils.*;
 	
 	import global.Colors;
 	import global.GlobalData;
@@ -194,7 +195,7 @@ package components {
 				
 				if (_ce.input.justDid("shoot")){
 					var bullet:Missile;
-					bullet = new Missile("bullet"+bulletcounter, {x:x + width, y:y, width:10, height:6, speed:15, angle:0});
+					bullet = new Missile("bullet"+bulletcounter, {x:x + width, y:y, width:15, height:15, speed:15, angle:0, view: fla.graphics.Bullet});
 					bulletcounter++
 					_ce.state.add(bullet);
 				}
