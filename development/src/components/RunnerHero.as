@@ -145,7 +145,7 @@ package components {
 			_hurtTimeoutID = setTimeout(endHurtState, hurtDuration);
 			onTakeDamage.dispatch();
 			
-			TweenMax.to(_ce.state.view.camera.offset, 2, {x : _ce.state.view.camera.offset.x - 200} );
+			TweenMax.to(_ce.state.view.camera.offset, 2, {x : _ce.state.view.camera.offset.x - 50} );
 			
 			//Makes sure that the hero is not frictionless while his control is disabled
 			if (_playerMovingHero)
@@ -194,8 +194,8 @@ package components {
 				}
 				
 				if (_ce.input.justDid("shoot")){
-					var bullet:Missile;
-					bullet = new Missile("bullet"+bulletcounter, {x:x + width, y:y, width:15, height:15, speed:15, angle:0, view: fla.graphics.Bullet});
+					var bullet:Bullet;
+					bullet = new Bullet("bullet"+bulletcounter, {x:x + width, y:y, width:15, height:15, speed:15, angle:0, view: fla.graphics.Bullet});
 					bulletcounter++
 					_ce.state.add(bullet);
 				}

@@ -71,22 +71,22 @@ package {
 			add(_hills);
 
 			
-			_emitter = new Emitter("Emitter") as Emitter;
-			_emitter.graphic = fla.graphics.Particle;
-			_emitter.dampingX = 1.1;
-			_emitter.dampingY = 1.1;
-			_emitter.gravityX = .9;
-			_emitter.gravityY = 4.9;
-			_emitter.minImpulseX = -10;
-			_emitter.maxImpulseX = -5;
-			_emitter.minImpulseY = -8;
-			_emitter.maxImpulseY = 10;
-			_emitter.emitFrequency = 100;
-			_emitter.emitAmount = 2;
-			_emitter.particleLifeSpan = 1000;
-			_emitter.x = 0;
-			_emitter.y = 0;
-			//add(_emitter);
+//			_emitter = new Emitter("Emitter") as Emitter;
+//			_emitter.graphic = fla.graphics.Particle;
+//			_emitter.dampingX = 1.1;
+//			_emitter.dampingY = 1.1;
+//			_emitter.gravityX = .9;
+//			_emitter.gravityY = 4.9;
+//			_emitter.minImpulseX = -10;
+//			_emitter.maxImpulseX = -5;
+//			_emitter.minImpulseY = -8;
+//			_emitter.maxImpulseY = 10;
+//			_emitter.emitFrequency = 100;
+//			_emitter.emitAmount = 2;
+//			_emitter.particleLifeSpan = 1000;
+//			_emitter.x = 0;
+//			_emitter.y = 0;
+//			//add(_emitter);
 			
 			_tfHolder = new TextFieldManager();
 			stage.addChild(_tfHolder);
@@ -102,7 +102,7 @@ package {
 			_mask.graphics.endFill();
 			_hillsView.mask = _mask;
 			
-			view.camera.setUp(_hero, new Point(stage.stageWidth / 2, stage.stageHeight / 2));
+			view.camera.setUp(_hero, new Point(stage.stageWidth / 2 - 200, stage.stageHeight / 2));
 			//view.camera.offset = new Point(300,stage.stageHeight / 2);			
 			notice("State initialized");
 			
@@ -116,10 +116,10 @@ package {
 			
 			_tfHolder.updateScore(_gameData.score);
 			
-			_emitter.x = -view.camera.camPos.x + 60 + 300;
-			_emitter.y = -view.camera.camPos.y + 100;
+//			_emitter.x = -view.camera.camPos.x + 60 + 300;
+//			_emitter.y = -view.camera.camPos.y + 100;
 			
-			notice("x " +  _emitter.x + "  y " +  _emitter.y); 
+			//notice("x " +  _emitter.x + "  y " +  _emitter.y); 
 			if (_gameData.gameOver && !_gameOverHandled) handleGameOver();
 		}
 		

@@ -16,6 +16,7 @@ package components {
 	import citrus.objects.platformer.box2d.Missile;
 
 	import citrus.core.CitrusObject;
+	import com.greensock.TweenMax;
 
 	/**
 	 * @author ezrabotter
@@ -73,11 +74,21 @@ package components {
 		
 		override public function update(timeDelta:Number):void {
 			super.update(timeDelta);
+			
+			if (x + _ce.state.view.camera.camPos.x <= 100) {
+				TweenMax.to(this, 1.5, {y : y + 300, x : x - 50, rotation: -60, onComplete: removeObject });
+			}
+			
+			
 			if (x <= _hero.x - _ce.stage.stageWidth) {
-				kill = true;
-				destroy();
-				updateCallEnabled = false;
+				removeObject();
 			} 			
+		}
+		
+		private function removeObject():void {
+			destroy();
+			updateCallEnabled = false;
+			
 		}
 		
 	}
