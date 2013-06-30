@@ -8,6 +8,10 @@ package global
 		public static const obstacleSmall:String = "Small";
 		public static const obstacleMedium:String = "Medium";
 		public static const obstacleLarge:String = "Large";
+		
+		
+		public static var ADD_POWER_VAL : Number = 2;
+		public static var MAX_POWER : Number = 25;
 
 	}
 

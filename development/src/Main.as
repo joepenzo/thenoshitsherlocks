@@ -9,7 +9,7 @@
 	import logmeister.connectors.TrazzleConnector;
 	import citrus.input.controllers.Keyboard;
 
-	[SWF(width="960", height="500", frameRate="60")]
+	[SWF(width="960", height="600", frameRate="60")]
 		
 	public class Main extends CitrusEngine
 	{

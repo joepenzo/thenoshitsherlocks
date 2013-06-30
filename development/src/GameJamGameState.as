@@ -8,10 +8,10 @@ package {
 	import citrus.physics.box2d.Box2D;
 	
 	import components.Background;
+	import components.GuiManager;
 	import components.ObstacleManager;
 	import components.RectangleSprite;
 	import components.RunnerHero;
-	import components.TextFieldManager;
 	import components.hill.HillManager;
 	import components.hill.HillsView;
 	
@@ -26,6 +26,7 @@ package {
 	import flash.geom.Rectangle;
 	
 	import global.Colors;
+	import global.Constants;
 	import global.GlobalData;
 
 	/**
@@ -43,8 +44,7 @@ package {
 		private var _gameOverHandled:Boolean = false;
 		
 		private var _mask:Sprite;
-		private var _tfHolder:TextFieldManager;
-		private var _emitter:Emitter;
+		private var _tfHolder:GuiManager;
 		private var _indicator:Crate;
 		private var _fallingRocks:CitrusSprite;
 		
@@ -74,6 +74,7 @@ package {
 			
 			_hero = new RunnerHero("Hero", {x:150, y:-100, radius:.5, jumpHeight:15});//_hero = new RunnerHero("Hero", {x:0, y:-100, radius:.5, jumpHeight:15, view : HeroGraphics});
 			add(_hero);
+			_gameData.currentPowerValue = Constants.MAX_POWER;
 			
 			add(new Platform ("Start", {y : stage.stageHeight, x:-stage.stageWidth/2, height : stage.stageHeight, width: stage.stageWidth, view: new RectangleSprite(stage.stageWidth, stage.stageHeight, Colors.BLACK)}));
 			_hillsView = new HillsView();
@@ -82,24 +83,7 @@ package {
 			add(_hills);
 
 			
-//			_emitter = new Emitter("Emitter") as Emitter;
-//			_emitter.graphic = fla.graphics.Particle;
-//			_emitter.dampingX = 1.1;
-//			_emitter.dampingY = 1.1;
-//			_emitter.gravityX = .9;
-//			_emitter.gravityY = 4.9;
-//			_emitter.minImpulseX = -10;
-//			_emitter.maxImpulseX = -5;
-//			_emitter.minImpulseY = -8;
-//			_emitter.maxImpulseY = 10;
-//			_emitter.emitFrequency = 100;
-//			_emitter.emitAmount = 2;
-//			_emitter.particleLifeSpan = 1000;
-//			_emitter.x = 0;
-//			_emitter.y = 0;
-//			//add(_emitter);
-			
-			_tfHolder = new TextFieldManager();
+			_tfHolder = new GuiManager();
 			stage.addChild(_tfHolder);
 
 			_obstaclesManager = new ObstacleManager("obstacleManager", {});
@@ -117,7 +101,6 @@ package {
 			_hillsView.mask = _mask;
 			
 			view.camera.setUp(_hero, new Point(stage.stageWidth / 2 - _hero.width, stage.stageHeight / 2));
-			//view.camera.offset = new Point(300,stage.stageHeight / 2);			
 			notice("State initialized");
 			
 			
@@ -129,15 +112,13 @@ package {
 			_gameData.score++;
 			
 			_tfHolder.updateScore(_gameData.score);
+			_tfHolder.updatePower(_gameData.currentPowerValue);
+			
 			
 			_indicator.x = -view.camera.camPos.x + 80;
 			_fallingRocks.x = -view.camera.camPos.x + 170;
 			_fallingRocks.y = _indicator.y - 75 ;
 			
-//			_emitter.x = -view.camera.camPos.x + 60 + 300;
-//			_emitter.y = -view.camera.camPos.y + 100;
-			
-			//notice("x " +  _emitter.x + "  y " +  _emitter.y); 
 			if (_gameData.gameOver && !_gameOverHandled) handleGameOver();
 		}
 		
@@ -149,7 +130,7 @@ package {
 			var bg:Background = new Background("Game");
 			bg.RemoveBg();
 			
-			_ce.state = new GameOverState();
+			//_ce.state = new GameOverState();
 			_tfHolder.visible = false;			
 		}		
 

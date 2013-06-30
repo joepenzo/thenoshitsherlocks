@@ -123,6 +123,7 @@ package components {
 		{
 			_shape = Box2DShapeMaker.Circle(radius*2, radius*2);
 		}
+		
 
 		override protected function defineFixture():void
 		{
@@ -177,7 +178,8 @@ package components {
 					_fixture.SetFriction(_friction);
 				}
 
-				if ((_body.GetContactList() != null) && _onGround && _ce.input.justDid("jump", inputChannel)) {
+				if ((_body.GetContactList() != null) && _onGround && _ce.input.justDid("jump", inputChannel) &&  _gameData.currentPowerValue >= 1) {
+					_gameData.currentPowerValue--;
 					drawSlope();
 					velocity.x = + jumpHeight/3;
 					velocity.y = -jumpHeight;
@@ -186,7 +188,8 @@ package components {
 					velocity.y -= jumpAcceleration;
 				}
 				
-				if (_ce.input.justDid("shoot")){
+				if (_ce.input.justDid("shoot") && _gameData.currentPowerValue >= 1){
+					_gameData.currentPowerValue--;
 					var bullet:Missile;
 					bullet = new Missile("bullet"+bulletcounter, {x:x + width, y:y - 60, width:15, height:15, speed:15, angle:0, view: fla.graphics.Bullet});
 					bulletcounter++;
