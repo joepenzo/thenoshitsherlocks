@@ -153,7 +153,11 @@ package {
 			_gameOverHandled = true;
 			fatal("GAMEOVER");
 			//TODO: timeout ofzo, gaat tering snel hier..
-			_ce.state = new MenuState();
+			
+			var bg:Background = new Background("Game");
+			bg.RemoveBg();
+			
+			_ce.state = new GameOverState();
 			_tfHolder.visible = false;			
 		}		
 

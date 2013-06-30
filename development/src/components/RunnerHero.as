@@ -292,7 +292,10 @@ package components {
 		public function handleGamerOver():void {
 			_gameData.gameOver = true;
 			body.SetAwake(false);
+			
 			//TODO: SLOW DEZE SHIT DOWN MAN..
+			//TODO: Zet background uit..
+			
 			_ce.state.view.camera.followTarget = false;
 			TweenMax.to(this, 2.5, {y: y + _ce.stage.stageHeight, x:x + 100, onComplete: doPause });
 		}
