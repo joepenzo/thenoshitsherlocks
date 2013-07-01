@@ -1,22 +1,29 @@
 package components {
 	
+	import Box2D.Common.Math.b2Vec2;
 	import Box2D.Dynamics.Contacts.b2Contact;
-	import citrus.objects.platformer.box2d.Platform;
-	import citrus.objects.platformer.box2d.Enemy;
+	
+	import citrus.core.CitrusObject;
 	import citrus.math.MathVector;
+	import citrus.objects.platformer.box2d.Enemy;
+	import citrus.objects.platformer.box2d.Missile;
+	import citrus.objects.platformer.box2d.Platform;
+	import citrus.objects.platformer.box2d.Sensor;
 	import citrus.physics.box2d.Box2DUtils;
 	import citrus.physics.box2d.IBox2DPhysicsObject;
-	import flash.geom.Point;
-	import global.Constants;
 	import citrus.utils.AGameData;
-	import global.GlobalData;
-	import citrus.objects.platformer.box2d.Sensor;
-	import Box2D.Common.Math.b2Vec2;
-	import nape.geom.Vec2;
-	import citrus.objects.platformer.box2d.Missile;
-
-	import citrus.core.CitrusObject;
+	
 	import com.greensock.TweenMax;
+	
+	import fla.graphics.TreeBreak;
+	
+	import flash.geom.Point;
+	
+	import global.Constants;
+	import global.GlobalData;
+	
+	import nape.geom.Vec2;
+	import citrus.objects.CitrusSprite;
 
 	/**
 	 * @author ezrabotter
@@ -27,6 +34,7 @@ package components {
 //		private static var _slowDownSpeed:int = 2;
 		private var _size : String;
 		private var _hero:RunnerHero;
+		private var breakTree:CitrusSprite;
 		
 		public function Obstacle(name:String,size:String,params:Object) {
 			_size = size;
@@ -36,7 +44,8 @@ package components {
 		}
 		
 		override public function handleBeginContact(contact:b2Contact):void {
-
+			
+			
 			var collider:IBox2DPhysicsObject = Box2DUtils.CollisionGetOther(this, contact);
 
 			if (collider is RunnerHero) {
@@ -52,8 +61,14 @@ package components {
 				missile.destroy();
 				
 				//body.SetActive(false);
+				
+				breakTree = new CitrusSprite("treebreak" , {x : x, y:y-150, view: fla.graphics.TreeBreak});
+				_ce.state.add(breakTree);
+
 				kill = true;
 				destroy();
+				
+				
 			}
 		
 			

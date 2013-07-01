@@ -223,8 +223,8 @@ package components {
 					if (_ce.input.justDid("shoot") && _gameData.currentPowerValue >= 1){
 					_ce.sound.playSound(Sounds.SHOOT);
 						_gameData.currentPowerValue--;
-						var bullet:Missile;
-						bullet = new Missile("bullet"+bulletcounter, {x:x + width, y:y - 60, width:15, height:15, speed:15, angle:0, view: fla.graphics.Bullet});
+						var bullet:ExtendedMissile;
+						bullet = new ExtendedMissile("bullet"+bulletcounter, {x:x + width, y:y - 60, width:15, height:15, speed:15, angle:0, view: fla.graphics.Bullet});
 						bulletcounter++;
 						_ce.state.add(bullet);
 					}

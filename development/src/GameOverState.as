@@ -9,6 +9,7 @@ package {
 	import global.Sizes;
 	import citrus.core.State;
 	import components.GuiManager;
+	import components.Achievement;
 	
 	/**
 	 * @author ezrabotter
@@ -39,12 +40,21 @@ package {
 			tf.size = 40;
 			tf.align = TextFormatAlign.CENTER;
 
+			var achievement : Achievement = new Achievement(_gameData.score);
+			
 			_gameOver.tf_score.defaultTextFormat = tf;
-
+			
+			var tf2 :TextFormat = new TextFormat();
+			tf2.size = 45;
+			tf2.align = TextFormatAlign.CENTER;
+			_gameOver.tf_achievement.defaultTextFormat = tf2;
+			_gameOver.tf_achievement.y += 35;
+			_gameOver.tf_achievement.text = achievement.name; 
 			_gameOver.tf_score.text = "WITH " + _gameData.score + " POINTS";
 			//_gameOver.tf_score.border =true;
 			
-			
+			//@TODO: get achievement from achievement class;
+			//@TODO _gameOver.tf_achievement.text = achievement.name();
 		}
 		
 		private function PressButton(event : MouseEvent) : void {
