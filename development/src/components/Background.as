@@ -11,9 +11,11 @@ package components {
 
 	import flash.display.Sprite;
 	import flash.utils.setInterval;
+	import flash.display.MovieClip;
+
 	TweenPlugin.activate([ColorTransformPlugin]); //activation is permanent in the SWF, so this line only needs to be run once.
 
-	public class Background extends Sprite {
+	public class Background extends MovieClip {
   	  	
 		private static var _backgroundTimout : int = 8000;
 		private var _hills:hillsbg;
@@ -57,5 +59,9 @@ package components {
 			this.removeChild(_bg);
 		}
 			
+		public function stopAnimation():void
+		{
+			stop();
+		}
 	}
 }

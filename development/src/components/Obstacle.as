@@ -24,6 +24,7 @@ package components {
 	
 	import nape.geom.Vec2;
 	import citrus.objects.CitrusSprite;
+	import global.Sounds;
 
 	/**
 	 * @author ezrabotter
@@ -65,6 +66,7 @@ package components {
 				breakTree = new CitrusSprite("treebreak" , {x : x, y:y-150, view: fla.graphics.TreeBreak});
 				_ce.state.add(breakTree);
 
+				_ce.sound.playSound(Sounds.VICTORY_TREE);
 				kill = true;
 				destroy();
 				

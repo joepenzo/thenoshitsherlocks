@@ -157,7 +157,7 @@ package components {
 			_hurtTimeoutID = setTimeout(endHurtState, hurtDuration);
 			onTakeDamage.dispatch();
 			
-			TweenMax.to(_ce.state.view.camera.offset, 2, {x : _ce.state.view.camera.offset.x - 200} );
+			TweenMax.to(_ce.state.view.camera.offset, 2, {x : _ce.state.view.camera.offset.x - 100} );
 			
 			//Makes sure that the hero is not frictionless while his control is disabled
 			if (_playerMovingHero)
@@ -217,7 +217,8 @@ package components {
 							_mayJump = true
 						}, JUMP_DELAY); 
 						drawSlope();
-						_gameData.currentPowerValue--;
+						//_gameData.currentPowerValue--;
+						_gameData.currentPowerValue-=2;
 						velocity.x = + jumpHeight/3;
 						velocity.y = -jumpHeight;
 						onJump.dispatch();
@@ -227,7 +228,8 @@ package components {
 					
 					if (_ce.input.justDid("shoot") && _gameData.currentPowerValue >= 1){
 					_ce.sound.playSound(Sounds.SHOOT);
-						_gameData.currentPowerValue--;
+						//_gameData.currentPowerValue--;
+						_gameData.currentPowerValue-=2;
 						var bullet:ExtendedMissile;
 						bullet = new ExtendedMissile("bullet"+bulletcounter, {x:x + width, y:y - 60, width:15, height:15, speed:15, angle:0, view: fla.graphics.Bullet});
 						bulletcounter++;

@@ -11,6 +11,9 @@ package global
 		public static var HURT:String = "HURT";
 		public static var AVELLACNE_ONE:String = "AVELLACNE_ONE";
 		public static var AVELLACNE_TWO:String = "AVELLACNE_TWO";
+		public static var AVELLACNE_LOOP:String = "AVELLACNE_LOOP";
+		public static var VICTORY_TREE:String = "VICTORY_TREE";
+		public static var VICTORY_RAMP:String = "VICTORY_RAMP";
 		
 		
 	}

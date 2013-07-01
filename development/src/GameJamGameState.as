@@ -67,7 +67,7 @@ package {
 			_gameData = _ce.gameData as GlobalData;
 			_gameData.dead = false;
 			
-			_ce.sound.playSound(Sounds.AVELLACNE_ONE);
+			_ce.sound.playSound(Sounds.AVELLACNE_LOOP);
 				
 			_background = new Background("Game");
 			_ce.stage.addChildAt(_background, 0);
@@ -144,9 +144,10 @@ package {
 		
 		
 		public function handleGameOverState():void {
+			_background.stopAnimation();
+			_ce.sound.stopSound(Sounds.AVELLACNE_LOOP);
 			
 			_gameOverHandled = true;
-			//TODO: timeout ofzo, gaat tering snel hier..
 			var bg:Background = new Background("Game");
 			bg.RemoveBg();
 			_ce.state = new GameOverState();

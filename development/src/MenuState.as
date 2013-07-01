@@ -1,18 +1,21 @@
 package {
-	import flash.utils.setTimeout;
-	import fla.menus.intro;
-	import flash.display.DisplayObject;
-
 	import citrus.core.CitrusObject;
-	import global.Sizes;
-	import global.GlobalData;
+	import citrus.core.State;
 	import citrus.objects.CitrusSprite;
-	import components.MenuButton;
-	import flash.events.MouseEvent;
+	
 	import components.Background;
+	import components.MenuButton;
 	
 	import fla.menus.MenuScreen;
-	import citrus.core.State;
+	import fla.menus.intro;
+	
+	import flash.display.DisplayObject;
+	import flash.events.MouseEvent;
+	import flash.utils.setTimeout;
+	
+	import global.GlobalData;
+	import global.Sizes;
+	import global.Sounds;
 
 	/**
 	 * @author ezrabotter
@@ -69,7 +72,8 @@ package {
 					
 					_intro = new intro();
 					add(new CitrusSprite("intro", {view: _intro,x:0,y:0,width:Sizes.gameWidth,height:Sizes.gameHeight}));			
-					
+					_ce.sound.playSound(Sounds.AVELLACNE_TWO);
+						
 					setTimeout(function():void{
 						_ce.state.destroy();
 						_ce.state = new GameJamGameState();

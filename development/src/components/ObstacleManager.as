@@ -7,6 +7,7 @@ package components
 	import components.RunnerHero;
 	import components.hill.HillManager;
 	
+	import fla.graphics.Boost;
 	import fla.graphics.PowerUp;
 	import fla.graphics.Tree;
 	
@@ -53,6 +54,11 @@ package components
 				//var powerUp : PickupPowerUp =  new PickupPowerUp( "PowerUp", {height: 20, width: 20, x:_gameData.currentHillX + 100, y:Utils.RandomIntBetween(_ce.state.view.camera.camPos.y, _gameData.nextHillY)} );
 				var powerUp : PickupPowerUp =  new PickupPowerUp( "PowerUp", {radius: 25, x:_gameData.currentHillX + 100, y:Utils.RandomIntBetween(_gameData.nextHillY-360, _gameData.nextHillY- 30), view: fla.graphics.PowerUp} );
 				_ce.state.add(powerUp);
+			}
+			
+			if (_gameData.heroPos.x % 1500 <= 5) { 
+				var boost : PickupBoost =  new PickupBoost( "Boost", {radius: 25, x:_gameData.currentHillX + 100, y:Utils.RandomIntBetween(_gameData.nextHillY-360, _gameData.nextHillY- 30), view: fla.graphics.Boost} );
+				_ce.state.add(boost);
 			}
 			
 		}

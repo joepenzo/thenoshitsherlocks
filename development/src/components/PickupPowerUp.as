@@ -10,6 +10,7 @@ package components {
 	import global.Constants;
 	import global.GlobalData;
 	import citrus.objects.platformer.box2d.Crate;
+	import global.Sounds;
 
 	/**
 	 * @author joepsuijkerbuijk
@@ -31,6 +32,7 @@ package components {
 			var collider:IBox2DPhysicsObject = Box2DUtils.CollisionGetOther(this, contact);
 			
 			if (collider is _collectorClass ||  collider is Crate ) {
+				_ce.sound.playSound(Sounds.POWERUP);
 				addPower(Constants.ADD_POWER_VAL);
 				kill = true;
 			}
