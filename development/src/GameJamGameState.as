@@ -21,7 +21,7 @@ package {
 	
 	import flash.display.Sprite;
 	import flash.geom.Point;
-	
+	import flash.utils.setTimeout;
 	import global.Colors;
 	import global.Constants;
 	import global.GlobalData;
@@ -63,6 +63,7 @@ package {
 
 		override public function initialize():void {
 			super.initialize();
+			
 			_gameData = _ce.gameData as GlobalData;
 			_gameData.dead = false;
 			
@@ -143,12 +144,13 @@ package {
 		
 		
 		public function handleGameOverState():void {
+			
 			_gameOverHandled = true;
 			//TODO: timeout ofzo, gaat tering snel hier..
 			var bg:Background = new Background("Game");
 			bg.RemoveBg();
-			
 			_ce.state = new GameOverState();
+			
 			_tfHolder.visible = false;	
 			
 		}

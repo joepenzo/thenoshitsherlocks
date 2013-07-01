@@ -157,7 +157,7 @@ package components {
 			_hurtTimeoutID = setTimeout(endHurtState, hurtDuration);
 			onTakeDamage.dispatch();
 			
-			TweenMax.to(_ce.state.view.camera.offset, 2, {x : _ce.state.view.camera.offset.x - 50} );
+			TweenMax.to(_ce.state.view.camera.offset, 2, {x : _ce.state.view.camera.offset.x - 200} );
 			
 			//Makes sure that the hero is not frictionless while his control is disabled
 			if (_playerMovingHero)
@@ -174,8 +174,13 @@ package components {
 			if (x + _ce.state.view.camera.camPos.x <= 70) {
 				body.SetAwake(false);
 				_ce.sound.playSound(Sounds.FALLDEADTWO);
+				_ce.state.view.camera.target = "";
 				TweenMax.to(this, 2.5, {y: y + _ce.stage.stageHeight, x:x + 100}); 
-				_gameState.handleGameOverState();
+				setTimeout(function():void{
+					this.updateCallEnabled = false
+					_gameState.handleGameOverState();
+				}, 800);
+				
 			}
 			
 			friction = _friction;

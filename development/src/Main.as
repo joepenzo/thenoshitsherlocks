@@ -52,8 +52,12 @@
 			
 			sound.playSound(Sounds.BACKGROUND);
 			
-			//state = new MenuState();
-			state = new GameJamGameState();
+			var menuState : MenuState = new MenuState();
+			var gameState : GameJamGameState = new GameJamGameState();
+			
+			
+			state = menuState;
+			//state = gameState;
 		}
 		
 
