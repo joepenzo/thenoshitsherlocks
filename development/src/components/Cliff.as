@@ -45,7 +45,7 @@ package components {
 
 			if (collider is RunnerHero) {
 				var hero : RunnerHero = collider as RunnerHero;
-				
+				_gameData.dead = true;
 				hero.body.SetAwake(false);
 				_ce.state.view.camera.target = "";
 				setTimeout(function():void{

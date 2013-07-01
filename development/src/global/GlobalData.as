@@ -17,11 +17,21 @@ package global {
 		private var _nextHillX:Number = 0;
 		private var _HeroPos:Point = new Point(0,0);
 		private var _slopeView : Sprite;
-		
+		private var _dead:Boolean = false;
 		private var _gameOver:Boolean = false;
 		
 		public function GlobalData() {
 			super();
+		}
+
+		public function get dead():Boolean
+		{
+			return _dead;
+		}
+
+		public function set dead(value:Boolean):void
+		{
+			_dead = value;
 		}
 
 		public function get hillView():Sprite

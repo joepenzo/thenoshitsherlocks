@@ -24,6 +24,7 @@ package {
 
 	import flash.display.Sprite;
 	import flash.geom.Point;
+	import global.Sounds;
 
 	/**
 	 * @author joepsuijkerbuijk
@@ -61,10 +62,11 @@ package {
 		override public function initialize():void {
 			super.initialize();
 			_gameData = _ce.gameData as GlobalData;
-
+			_gameData.dead = false;
+			
 			_background = new Background("Game");
 			_ce.stage.addChildAt(_background, 0);
-			
+
 			_ce.input.keyboard.addKeyAction("shoot", Keyboard.COMMAND);
 			_ce.input.keyboard.addKeyAction("shoot", Keyboard.CTRL);
 

@@ -31,6 +31,7 @@ package components {
 	import flash.utils.*;
 	import citrus.objects.platformer.box2d.Crate;
 	import citrus.core.IState;
+	import global.Sounds;
 
 	/**
 	 * @author joepsuijkerbuijk
@@ -260,16 +261,21 @@ package components {
 			var prevAnimation : CitrusSprite = _currAnimation;
 			
 			var walkingSpeed:Number = getWalkingSpeed();
-			if (_gameData.gameOver) {
+			if (_gameData.dead) {
 				_currAnimation = A_DEAD;
 			} else {
 				if ((_body.GetContactList() != null)) { // ON GROUND
 					_currAnimation = A_RUN;
 				} else { // JUMP
 					_currAnimation = A_JUMP;
+					//_ce.sound.playSound(Sounds.JUMP);
+				//	notice(_ce.sound.getSound(Sounds.JUMP))
+				//	debug(_ce.sound.getSound(Sounds.JUMP).name);
+				//	error(_ce.sound.getSound(Sounds.JUMP).loaded);
 				}
 				if (_ce.input.justDid("shoot")){ 
 					_currAnimation = this.A_ACTION_TWO;
+					
 				}
 			}
 			
