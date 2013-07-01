@@ -1,17 +1,22 @@
 package components {
-	import citrus.objects.platformer.box2d.Missile;
 	import Box2D.Common.Math.b2Vec2;
 	import Box2D.Dynamics.Contacts.b2Contact;
-
+	
+	import citrus.core.IState;
 	import citrus.math.MathVector;
 	import citrus.objects.CitrusSprite;
+	import citrus.objects.platformer.box2d.Crate;
 	import citrus.objects.platformer.box2d.Hero;
+	import citrus.objects.platformer.box2d.Missile;
 	import citrus.objects.platformer.box2d.Sensor;
 	import citrus.physics.PhysicsCollisionCategories;
 	import citrus.physics.box2d.Box2DShapeMaker;
 	import citrus.physics.box2d.Box2DUtils;
 	import citrus.physics.box2d.IBox2DPhysicsObject;
-
+	
+	import com.greensock.*;
+	import com.greensock.easing.*;
+	
 	import fla.graphics.AllSlopes;
 	import fla.graphics.Bullet;
 	import fla.hero.DamageFullSpeed;
@@ -20,17 +25,13 @@ package components {
 	import fla.hero.RunFullSpeed;
 	import fla.hero.actionOneFullSpeed;
 	import fla.hero.actionTwoFullSpeed;
-
-	import global.GlobalData;
-
-	import com.greensock.*;
-	import com.greensock.easing.*;
-
+	import fla.sound.*;
+	
 	import flash.display.MovieClip;
 	import flash.geom.Point;
 	import flash.utils.*;
-	import citrus.objects.platformer.box2d.Crate;
-	import citrus.core.IState;
+	
+	import global.GlobalData;
 	import global.Sounds;
 
 	/**
@@ -53,12 +54,15 @@ package components {
 
 		private var _heroGraphicArray : Array = [];
 		private var _currAnimation:CitrusSprite;
+		private var _prevAnimation:CitrusSprite;
 		private var _collisionAngle:Number;
 		private var _topPart:Crate;
 		private var _heroTopPart:Crate;
 		private var _mayJump: Boolean = true;;
 		private var _gameState:GameJamGameState;
 		
+		
+		private var _deadSoundStarted:Boolean = false;
 		
 		public function RunnerHero(name : String, params : Object = null) {
 					
@@ -113,6 +117,8 @@ package components {
 			_ce.state.add(A_DEAD);
 			_heroGraphicArray.push(A_DEAD);
 			
+			_prevAnimation = A_JUMP;
+			_currAnimation = A_RUN;
 			
 			_heroTopPart = new Crate("HeroTopPart", {x:150, y:0, width :25, height : 50});
 			_ce.state.add(_heroTopPart);
@@ -167,6 +173,7 @@ package components {
 			
 			if (x + _ce.state.view.camera.camPos.x <= 70) {
 				body.SetAwake(false);
+				_ce.sound.playSound(Sounds.FALLDEADTWO);
 				TweenMax.to(this, 2.5, {y: y + _ce.stage.stageHeight, x:x + 100}); 
 				_gameState.handleGameOverState();
 			}
@@ -199,6 +206,7 @@ package components {
 					
 //					if ((this.body.GetContactList() != null) && _onGround && _ce.input.justDid("jump", inputChannel)) {
 					if (_mayJump && _onGround && _ce.input.justDid("jump", inputChannel)) {
+					_ce.sound.playSound(Sounds.JUMP);
 						_mayJump = false;
 						setTimeout(function():void{
 							_mayJump = true
@@ -213,6 +221,7 @@ package components {
 					}
 					
 					if (_ce.input.justDid("shoot") && _gameData.currentPowerValue >= 1){
+					_ce.sound.playSound(Sounds.SHOOT);
 						_gameData.currentPowerValue--;
 						var bullet:Missile;
 						bullet = new Missile("bullet"+bulletcounter, {x:x + width, y:y - 60, width:15, height:15, speed:15, angle:0, view: fla.graphics.Bullet});
@@ -258,33 +267,38 @@ package components {
 		}
 		
 		override protected function updateAnimation():void {
-			var prevAnimation : CitrusSprite = _currAnimation;
-			
+
 			var walkingSpeed:Number = getWalkingSpeed();
 			if (_gameData.dead) {
 				_currAnimation = A_DEAD;
+				//fatal("die");
 			} else {
-				if ((_body.GetContactList() != null)) { // ON GROUND
-					_currAnimation = A_RUN;
-				} else { // JUMP
-					_currAnimation = A_JUMP;
-					//_ce.sound.playSound(Sounds.JUMP);
-				//	notice(_ce.sound.getSound(Sounds.JUMP))
-				//	debug(_ce.sound.getSound(Sounds.JUMP).name);
-				//	error(_ce.sound.getSound(Sounds.JUMP).loaded);
-				}
-				if (_ce.input.justDid("shoot")){ 
+				if (_ce.input.justDid("shoot")){
+					//fatal("shoot");
 					_currAnimation = this.A_ACTION_TWO;
-					
+				} 
+				if (_mayJump) { 
+					//fatal("run");
+					_currAnimation = A_RUN;
+				} else {
+					//fatal("jump");
+					_currAnimation = A_JUMP;
+				} 
+				if (_hurt) {
+					//fatal("hurt");
+					_currAnimation = A_DAMAGE;
 				}
 			}
+  
 			
-			if (prevAnimation != _currAnimation) {
+			if (_prevAnimation != _currAnimation) {
 				for each (var animation : CitrusSprite in _heroGraphicArray) {
 					animation.visible = false;
 					if (_currAnimation == animation) animation.visible = true;
 				}
 			}
+			
+			_prevAnimation = _currAnimation;
 			
 		}
 		

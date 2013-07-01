@@ -45,13 +45,16 @@ package components {
 
 			if (collider is RunnerHero) {
 				var hero : RunnerHero = collider as RunnerHero;
+			
 				_gameData.dead = true;
 				hero.body.SetAwake(false);
 				_ce.state.view.camera.target = "";
+				
 				setTimeout(function():void{
 					_gameState.handleGameOverState();
 					hero.updateCallEnabled = false;
 				}, 800); //4000
+				
 				TweenMax.to(hero, 2.5, {y: y + _ce.stage.stageHeight, x:x + 100}); 
 				
 			}

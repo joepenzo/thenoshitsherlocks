@@ -6,7 +6,7 @@ package {
 	import citrus.objects.platformer.box2d.Crate;
 	import citrus.objects.platformer.box2d.Platform;
 	import citrus.physics.box2d.Box2D;
-
+	
 	import components.Background;
 	import components.GuiManager;
 	import components.ObstacleManager;
@@ -14,16 +14,17 @@ package {
 	import components.RunnerHero;
 	import components.hill.HillManager;
 	import components.hill.HillsView;
-
+	
 	import fla.graphics.HillMask;
 	import fla.graphics.RocksFalling;
-
+	import fla.sound.AvalanceOne;
+	
+	import flash.display.Sprite;
+	import flash.geom.Point;
+	
 	import global.Colors;
 	import global.Constants;
 	import global.GlobalData;
-
-	import flash.display.Sprite;
-	import flash.geom.Point;
 	import global.Sounds;
 
 	/**
@@ -44,6 +45,7 @@ package {
 		private var _tfHolder:GuiManager;
 		private var _indicator:Crate;
 		private var _fallingRocks:CitrusSprite;
+		private var SOUND_AVALANCE:AvalanceOne;
 		
 		public function GameJamGameState() {
 			super();
@@ -64,6 +66,8 @@ package {
 			_gameData = _ce.gameData as GlobalData;
 			_gameData.dead = false;
 			
+			_ce.sound.playSound(Sounds.AVELLACNE_ONE);
+				
 			_background = new Background("Game");
 			_ce.stage.addChildAt(_background, 0);
 
@@ -91,6 +95,7 @@ package {
 			_hills = new HillManager("Hills",{hillStartY : stage.stageHeight/2, rider:_hero, sliceWidth:100, roundFactor:5, sliceHeight:stage.stageHeight, widthHills:stage.stageWidth, registration:"topLeft", view:_hillsView});
 			add(_hills);
 
+			
 			
 			_tfHolder = new GuiManager();
 			stage.addChild(_tfHolder);
@@ -139,9 +144,7 @@ package {
 		
 		public function handleGameOverState():void {
 			_gameOverHandled = true;
-			fatal("GAMEOVER dikke g");
 			//TODO: timeout ofzo, gaat tering snel hier..
-			
 			var bg:Background = new Background("Game");
 			bg.RemoveBg();
 			

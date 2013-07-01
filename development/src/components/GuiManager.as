@@ -18,8 +18,8 @@ package components
 		private var _powerBar:Sprite;
 		
 		public function GuiManager() {
-			var title : ChineseRockTextField = new ChineseRockTextField("dhajskfhkjsdhfjdhsgf");
-			addChild(title);
+			//var title : ChineseRockTextField = new ChineseRockTextField("dhajskfhkjsdhfjdhsgf");
+			//addChild(title);
 			
 			var guiContainer : fla.graphics.Splash = new Splash();
 			addChild(guiContainer);
