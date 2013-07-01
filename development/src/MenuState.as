@@ -73,7 +73,7 @@ package {
 					setTimeout(function():void{
 						_ce.state.destroy();
 						_ce.state = new GameJamGameState();
-					}, 0); //4000
+					}, 2000); //4000
 					
 					break;
 				case "Instructions":

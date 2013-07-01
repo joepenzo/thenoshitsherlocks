@@ -25,7 +25,7 @@
 	import logmeister.LogMeister;
 	import logmeister.connectors.TrazzleConnector;
 
-	[SWF(width="960", height="600", frameRate="60")]
+	[SWF(width="960", height="600", frameRate="60", backgroundColor="#000")]
 		
 	public class Main extends CitrusEngine
 	{
@@ -52,12 +52,13 @@
 			
 			sound.playSound(Sounds.BACKGROUND);
 			
-			var menuState : MenuState = new MenuState();
-			var gameState : GameJamGameState = new GameJamGameState();
+			//var menuState : MenuState = new MenuState();
+			//var gameState : GameJamGameState = new GameJamGameState();
+			
+			state = new MenuState();
+//			state = new GameJamGameState();
 			
 			
-			state = menuState;
-			//state = gameState;
 		}
 		
 
