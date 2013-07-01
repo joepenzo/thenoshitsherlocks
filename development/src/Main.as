@@ -12,6 +12,7 @@
 	import fla.sound.FallDead;
 	import fla.sound.FallDeadTwo;
 	import fla.sound.Hurt;
+	import fla.sound.Intro;
 	import fla.sound.Jump;
 	import fla.sound.Powerup;
 	import fla.sound.Shoot;
@@ -51,10 +52,10 @@
 			sound.addSound(Sounds.FALLDEADTWO, {sound:fla.sound.FallDeadTwo, volume:.1});
 			sound.addSound(Sounds.HURT, {sound:fla.sound.Hurt, volume:1});
 			sound.addSound(Sounds.AVELLACNE_ONE, {sound:fla.sound.AvalanceOne, volume:.2});
-			sound.addSound(Sounds.AVELLACNE_TWO, {sound:fla.sound.AvalanceTwo, volume:.3});
+			sound.addSound(Sounds.AVELLACNE_TWO, {sound:fla.sound.Intro, volume:.3});
 			sound.addSound(Sounds.AVELLACNE_LOOP, {sound:fla.sound.AvalanceLoop, volume:.3});
-
 			sound.addSound(Sounds.VICTORY_TREE, {sound:fla.sound.VicotorySpikeDestroyed, volume:.3});
+			
 			sound.addSound(Sounds.VICTORY_RAMP, {sound:fla.sound.VicotoryRamp, volume:.3});
 			
 			sound.playSound(Sounds.BACKGROUND);
